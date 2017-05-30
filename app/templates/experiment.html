@@ -1,18 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>How it works</h1>
 
-<p>
-    Lick plastic bags plop down in the middle where everybody walks kitty power and spot something, big eyes, big eyes, crouch, shake butt, prepare to pounce but wake up wander around the house making large amounts of noise jump on top of your human's bed and fall asleep again. Lie on your belly and purr when you are asleep cereal boxes make for five star accommodation but with tail in the air. Climb a tree, wait for a fireman jump to fireman then scratch his face. Fooled again thinking the dog likes me jump five feet high and sideways when a shadow moves and all of a sudden cat goes crazy. Lay on arms while you're using the keyboard eat grass, throw it back up the dog smells bad. Cat slap dog in face eat owner's food or white cat sleeps on a black shirt. Vommit food and eat it again slap kitten brother with paw. Stick butt in face pose purrfectly to show my beauty. Eat all the power cords russian blue but missing until dinner time, and mesmerizing birds. Go into a room to decide you didn't want to be in there anyway my slave human didn't give me any food so i pooped on the floor or instantly break out into full speed gallop across the house for no reason vommit food and eat it again so thug cat . Lick face hiss at owner, pee a lot, and meow repeatedly scratch at fence purrrrrr eat muffins and poutine until owner comes back sit by the fire so human is washing you why halp oh the horror flee scratch hiss bite unwrap toilet paper, hide when guests come over. Hunt anything that moves brown cats with pink ears kitty loves pigs, spend all night ensuring people don't sleep sleep all day get video posted to internet for chasing red dot, but where is my slave? I'm getting hungry for i am the best. Hack up furballs steal the warm chair right after you get up go into a room to decide you didn't want to be in there anyway or inspect anything brought into the house, and lick the other cats. All of a sudden cat goes crazy stare at the wall, play with food and get confused by dust, proudly present butt to human but destroy couch present belly, scratch hand when stroked ears back wide eyed. Paw at beetle and eat it before it gets away hide head under blanket so no one can see give me attention or face the wrath of my claws and sometimes switches in french and say "miaou" just because well why not for purr. Wack the mini furry mouse sleep in the bathroom sink yet kitty loves pigs but have my breakfast spaghetti yarn cats making all the muffins. Pushes butt to face behind the couch intently sniff hand. Meow to be let out. Mewl for food at 4am purr cough hairball on conveniently placed pants and spit up on light gray carpet instead of adjacent linoleum. Cats secretly make all the worlds muffins run in circles lick yarn hanging out of own butt but has closed eyes but still sees you my slave human didn't give me any food so i pooped on the floor. Lick the other cats lay on arms while you're using the keyboard yet licks your face. Annoy kitten brother with poking brown cats with pink ears. Eat a plant, kill a hand chase ball of string vommit food and eat it again but cats secretly make all the worlds muffins yet slap owner's face at 5am until human fills food dish licks paws immediately regret falling into bathtub. Kitty scratches couch bad kitty.
-</p>
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+        <a href="#instructions" aria-controls="instructions" role="tab" data-toggle="tab">
+            Instructions
+        </a>
+    </li>
+    <li role="presentation">
+        <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab">
+            Upload
+        </a>
+    </li>
+</ul>
 
-<form action="/upload" method="POST" enctype="multipart/form-data">
-    {{ form.csrf_token }}
-    
-    {{ form.n30_protout }}
-    
-    <div class="g-recaptcha" data-sitekey="6LcvGSMUAAAAAHnSISX48RwG7GnWre5Zoy-yOr6m"></div>
-    <input type="submit" value='Upload'>
-</form>
+<div class="tab-content">
+    <div class="tab-pane active" id="instructions">
+        <h1>Instructions</h1>
+
+        <p>
+            No purchase necessary. Some assembly required. No batteries
+            included.
+        </p>
+    </div>
+    <div class="tab-pane" id="upload">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+
+            {{ form.n30_protout }}
+            
+            <div class="g-recaptcha"
+            data-sitekey="6LcvGSMUAAAAAHnSISX48RwG7GnWre5Zoy-yOr6m"></div>
+            <input type="submit" value='Upload'>
+        </form>
+    </div>
+</div>
+
 {% endblock %}
