@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% if title %}
+        {{ title }}
+        {% else %}
+        GenSET Testing Site
+        {% endif %}
+    </title>
+    
+    {% include "_head.html" %}
+    {% block extra_headers %}{% endblock %}
+</head>
+<body>
+    {% include "_nav.html" %}
+    
+    {% include "_flash.html" %}
+    
+    <div class="container-fluid">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <script>
+    /* global $ */
+    $(function() {
+        $("#{{ request.endpoint }}").addClass('active');
+    });
+    </script>
+</body>
+</html>

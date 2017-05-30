@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    font-family: Arial, serif;
+}
+
+p {
+    font-size: 16px;
+    text-align: justify;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica, sans-serif;
+    font-variant: small-caps;
+}
+
+.container-fluid {
+    width: 60em;
+}
