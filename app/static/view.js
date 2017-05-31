@@ -10,27 +10,27 @@ var config = {
 firebase.initializeApp(config);
 
 function updateProgressbar(percent) {
-    $('.progress-bar')
-    .css('width', percent + '%')
-    .attr('aria-valuenow', percent)
-    .text(percent + '%');
+    $(".progress-bar")
+    .css("width", percent + "%")
+    .attr("aria-valuenow", percent)
+    .text(percent + "%");
 }
 
 function updateOutput(text) {
-    $('#output')
-    .append(text + '<br>');
+    $("#output")
+    .append(text + "<br>");
     
     try {
-        if (text.includes('Warning')) {
-            $('.progress-bar')
-            .addClass('progress-bar-warning')
-            .removeClass('progress-bar-success');
+        if (text.includes("Warning")) {
+            $(".progress-bar")
+            .addClass("progress-bar-warning")
+            .removeClass("progress-bar-success");
         }
         
-        if (text.includes('Error')) {
-            $('.progress-bar')
-            .addClass('progress-bar-danger')
-            .removeClass('progress-bar-success progress-bar-warning');
+        if (text.includes("Error")) {
+            $(".progress-bar")
+            .addClass("progress-bar-danger")
+            .removeClass("progress-bar-success progress-bar-warning");
         }
     }
     catch (e) {
@@ -40,19 +40,19 @@ function updateOutput(text) {
 
 $(function() {
     // Comment these back in for real-time updates
-    // var progressRef = firebase.database().ref('sessions/' + session_id + '/progress');
-    // progressRef.on('value', function(snapshot) {
+    // var progressRef = firebase.database().ref("sessions/" + session_id + "/progress");
+    // progressRef.on("value", function(snapshot) {
     //     // Update progress bar
     //     updateProgressbar(snapshot.val());
     // });
-    // var textRef = firebase.database().ref('sessions/' + session_id + '/text');
-    // textRef.on('value', function(snapshot) {
+    // var textRef = firebase.database().ref("sessions/" + session_id + "/text");
+    // textRef.on("value", function(snapshot) {
     //     // Add text to output
     //     updateOutput(snapshot.val());
     // });
     
     $.get("/api/logs?sid=" + session_id, function(data) {
         // Add original log text to output
-        $('#output').html(data)
+        $("#output").html(data)
     });
 });

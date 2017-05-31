@@ -8,7 +8,7 @@ import requests
 import datetime
 
 @app.route('/')
-@app.route('/about/')
+@app.route('/about')
 def index():
     return render_template('index.html',
                             title="GenSET")
@@ -18,6 +18,7 @@ def experiment():
     form = ProcessingForm(request.form)
     return render_template('experiment.html',
                             title="Try it Out!",
+                            sitekey=app.config['G_CAPTCHA_SITEKEY'],
                             form=form)
                                 
 @app.route('/upload', methods=['POST'])
@@ -42,6 +43,7 @@ def upload():
                     flash('Error in %s: %s' % (getattr(form, field).label.text, e))
             return redirect(url_for('experiment',
                                     title="Try it Out!",
+                                    sitekey=app.config['G_CAPTCHA_SITEKEY'],
                                     form=form))
 
         path = tempfile.mkdtemp(dir=app.config['UPLOAD_FOLDER'], prefix='')
@@ -66,7 +68,10 @@ def upload():
     else:
         # Show all authentication errors
         flash('Error: %s' % ', '.join(resp['error-codes']))
-        return redirect(url_for('experiment'))
+        return redirect(url_for('experiment',
+                                title="Try it Out!",
+                                sitekey=app.config['G_CAPTCHA_SITEKEY'],
+                                form=form))
 
 @app.route('/view/<sid>')
 def view(sid):

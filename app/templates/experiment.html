@@ -44,8 +44,9 @@ src="{{ url_for('static', filename='experiment.js') }}"></script>
             <br><br>
             
             <button class="btn btn-primary g-recaptcha"
-            data-sitekey="6LelpiMUAAAAALB2YtY6u3chJFaFgPFfEEhqdqR8"
-            data-callback="onSubmitForm">Upload</Button>
+            data-sitekey="{{ sitekey }}"
+            data-callback="onSubmitForm"
+            data-size="invisible">Upload</Button>
         </form>
         
         <script type="text/javascript">
