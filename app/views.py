@@ -20,7 +20,7 @@ def experiment():
                             title="Try it Out!",
                             sitekey=app.config['G_CAPTCHA_SITEKEY'],
                             form=form)
-                                
+
 @app.route('/upload', methods=['POST'])
 def upload():
     # Check Google reCAPTCHA v2
@@ -41,37 +41,34 @@ def upload():
             for field, errors in form.errors.items():
                 for e in errors:
                     flash('Error in %s: %s' % (getattr(form, field).label.text, e))
-            return redirect(url_for('experiment',
-                                    title="Try it Out!",
-                                    sitekey=app.config['G_CAPTCHA_SITEKEY'],
-                                    form=form))
+        else:
+            path = tempfile.mkdtemp(dir=app.config['UPLOAD_FOLDER'], prefix='')
+            session_id = os.path.basename(path)
 
-        path = tempfile.mkdtemp(dir=app.config['UPLOAD_FOLDER'], prefix='')
-        session_id = os.path.basename(path)
+            # Save the files
+            for k, v in request.files.items():
+                fn = os.path.join(path, secure_filename(v.filename))
+                v.save(fn)
+            link = '<a href="%s" class="alert-link">view page</a>' % url_for('view', sid=session_id)
+            success_txt = 'Success! To view progress, go to the %s' % link
+            flash(Markup(success_txt))
 
-        # Save the files
-        for k, v in request.files.items():
-            fn = os.path.join(path, secure_filename(v.filename))
-            v.save(fn)
-        link = '<a href="%s" class="alert-link">view page</a>' % url_for('view', sid=session_id)
-        success_txt = 'Success! To view progress, go to the %s' % link
-        flash(Markup(success_txt))
+            # If the path exists, add an entry to firebase, and render the view
+            data = {
+                "progress": 0,
+                "text": "Initializing"
+            }
+            fbdb.child('sessions').child(session_id).set(data)
 
-        # If the path exists, add an entry to firebase, and render the view
-        data = {
-            "progress": 0,
-            "text": "Initializing"
-        }
-        fbdb.child('sessions').child(session_id).set(data)
-
-        return redirect(url_for('view', sid=session_id))
+            return redirect(url_for('view', sid=session_id))
     else:
         # Show all authentication errors
         flash('Error: %s' % ', '.join(resp['error-codes']))
-        return redirect(url_for('experiment',
-                                title="Try it Out!",
-                                sitekey=app.config['G_CAPTCHA_SITEKEY'],
-                                form=form))
+
+    return redirect(url_for('experiment',
+                            title="Try it Out!",
+                            sitekey=app.config['G_CAPTCHA_SITEKEY'],
+                            form=form))
 
 @app.route('/view/<sid>')
 def view(sid):
@@ -95,7 +92,7 @@ def script_update():
         sid = request.json['session_id']
         progress = int(request.json['progress'])
         text = request.json['text']
-    except:
+    except ValueError:
         # If progress isn't an int, or if any of the fields are missing, abort.
         abort(400)
     

@@ -1,6 +1,6 @@
 /* global firebase */
 /* global $ */
-/* global session_id */
+/* global sessionID */
 var config = {
     apiKey: "AIzaSyBjM8SOL5rGiUq9gEF6NvBOMAWDO6Vfoqo",
     authDomain: "genset-demo-website.firebaseapp.com",
@@ -40,18 +40,18 @@ function updateOutput(text) {
 
 $(function() {
     // Comment these back in for real-time updates
-    // var progressRef = firebase.database().ref("sessions/" + session_id + "/progress");
+    // var progressRef = firebase.database().ref("sessions/" + sessionID + "/progress");
     // progressRef.on("value", function(snapshot) {
     //     // Update progress bar
     //     updateProgressbar(snapshot.val());
     // });
-    // var textRef = firebase.database().ref("sessions/" + session_id + "/text");
+    // var textRef = firebase.database().ref("sessions/" + sessionID + "/text");
     // textRef.on("value", function(snapshot) {
     //     // Add text to output
     //     updateOutput(snapshot.val());
     // });
     
-    $.get("/api/logs?sid=" + session_id, function(data) {
+    $.get("/api/logs?sid=" + sessionID, function(data) {
         // Add original log text to output
         $("#output").html(data);
     });

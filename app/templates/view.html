@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block extra_headers %}
-<script>var session_id = "{{ sid }}";</script>
+<script>var sessionID = "{{ sid }}";</script>
 <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='view.js') }}"></script>
 {% endblock %}
