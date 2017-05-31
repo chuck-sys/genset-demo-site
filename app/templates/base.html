@@ -16,9 +16,8 @@
 <body>
     {% include "_nav.html" %}
     
-    {% include "_flash.html" %}
-    
     <div class="container-fluid">
+        {% include "_flash.html" %}
         {% block content %}{% endblock %}
     </div>
     

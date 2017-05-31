@@ -17,8 +17,8 @@ def index():
 def experiment():
     form = ProcessingForm(request.form)
     return render_template('experiment.html',
-                                title="Try it Out!",
-                                form=form)
+                            title="Try it Out!",
+                            form=form)
                                 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -33,6 +33,17 @@ def upload():
     
     # Check to see if user is a bot
     if resp['success']:
+        # Check to see if it is a valid submission
+        form = ProcessingForm()
+        if not form.validate_on_submit():
+            # Invalid submissions get flashed
+            for field, errors in form.errors.items():
+                for e in errors:
+                    flash('Error in %s: %s' % (getattr(form, field).label.text, e))
+            return redirect(url_for('experiment',
+                                    title="Try it Out!",
+                                    form=form))
+        
         path = tempfile.mkdtemp(dir=app.config['UPLOAD_FOLDER'], prefix='')
         session_id = os.path.basename(path)
         
@@ -53,6 +64,7 @@ def upload():
         
         return redirect(url_for('view', sid=session_id))
     else:
+        # Show all authentication errors
         flash('Error: %s' % ', '.join(resp['error-codes']))
         return redirect(url_for('experiment'))
 
