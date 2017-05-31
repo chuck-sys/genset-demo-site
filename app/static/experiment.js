@@ -1,7 +1,7 @@
 /* global $ */
 
 function updateTrainingVisibility(value) {
-    if (value == "custom") {
+    if (value === "custom") {
         $("#trainingzip").show();
     } else {
         $("#trainingzip").hide();

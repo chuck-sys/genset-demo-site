@@ -53,6 +53,6 @@ $(function() {
     
     $.get("/api/logs?sid=" + session_id, function(data) {
         // Add original log text to output
-        $("#output").html(data)
+        $("#output").html(data);
     });
 });

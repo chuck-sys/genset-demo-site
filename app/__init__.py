@@ -3,7 +3,11 @@ import pyrebase
 import json
 
 app = Flask(__name__)
-app.config.from_object('config')
+
+try:
+    app.config.from_object('config')
+except ImportError:
+    app.config.from_object('test_config')
 
 # JSON firebase authentication
 def firebase_init():
