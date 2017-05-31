@@ -30,7 +30,7 @@ def upload():
     }
     resp = requests.post(app.config['G_CAPTCHA_VERIFY'],
                         data=data).json()
-    
+
     # Check to see if user is a bot
     if resp['success']:
         # Check to see if it is a valid submission
@@ -43,10 +43,10 @@ def upload():
             return redirect(url_for('experiment',
                                     title="Try it Out!",
                                     form=form))
-        
+
         path = tempfile.mkdtemp(dir=app.config['UPLOAD_FOLDER'], prefix='')
         session_id = os.path.basename(path)
-        
+
         # Save the files
         for k, v in request.files.items():
             fn = os.path.join(path, secure_filename(v.filename))
@@ -54,14 +54,14 @@ def upload():
         link = '<a href="%s" class="alert-link">view page</a>' % url_for('view', sid=session_id)
         success_txt = 'Success! To view progress, go to the %s' % link
         flash(Markup(success_txt))
-        
+
         # If the path exists, add an entry to firebase, and render the view
         data = {
             "progress": 0,
             "text": "Initializing"
         }
         fbdb.child('sessions').child(session_id).set(data)
-        
+
         return redirect(url_for('view', sid=session_id))
     else:
         # Show all authentication errors
