@@ -40,16 +40,26 @@ function updateOutput(text) {
 
 $(function() {
     // Comment these back in for real-time updates
-    // var progressRef = firebase.database().ref("sessions/" + sessionID + "/progress");
-    // progressRef.on("value", function(snapshot) {
-    //     // Update progress bar
-    //     updateProgressbar(snapshot.val());
-    // });
-    // var textRef = firebase.database().ref("sessions/" + sessionID + "/text");
-    // textRef.on("value", function(snapshot) {
-    //     // Add text to output
-    //     updateOutput(snapshot.val());
-    // });
+    var progressRef = firebase.database().ref("sessions/" + sessionID + "/progress");
+    var textRef = firebase.database().ref("sessions/" + sessionID + "/text");
+    textRef.on("value", function(snapshot) {
+        // Add text to output
+        updateOutput(snapshot.val());
+    });
+    progressRef.on("value", function(snapshot) {
+        // Update progress bar
+        updateProgressbar(snapshot.val());
+        
+        // If we get to 100, call everything off
+        if (snapshot.val() == 100) {
+            progressRef.off("value");
+            textRef.off("value");
+        }
+    });
+    
+    $.ajaxSetup({
+        cache: false
+    });
     
     $.get("/api/logs?sid=" + sessionID, function(data) {
         // Add original log text to output

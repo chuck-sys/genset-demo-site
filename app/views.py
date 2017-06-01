@@ -2,10 +2,11 @@ from flask import render_template, redirect, url_for, request, flash, abort, Mar
 from werkzeug.utils import secure_filename
 from app import app, fbdb
 from .forms import ProcessingForm
+from shutil import rmtree
 import os
 import tempfile
 import requests
-import datetime
+import subprocess as sub
 
 @app.route('/')
 @app.route('/about')
@@ -47,19 +48,23 @@ def upload():
 
             # Save the files
             for k, v in request.files.items():
-                fn = os.path.join(path, secure_filename(v.filename))
+                # Sanity checking
+                if v.filename == '': continue
+
+                sfn = secure_filename(v.filename)
+                if sfn == '':
+                    sfn = v.filename
+                fn = os.path.join(path, sfn)
                 v.save(fn)
             link = '<a href="%s" class="alert-link">view page</a>' % url_for('view', sid=session_id)
             success_txt = 'Success! To view progress, go to the %s' % link
             flash(Markup(success_txt))
 
-            # If the path exists, add an entry to firebase, and render the view
-            data = {
-                "progress": 0,
-                "text": "Initializing"
-            }
-            fbdb.child('sessions').child(session_id).set(data)
-
+            # If the path exists, render the view
+            f = open(os.path.join(path, 'logs.txt'), 'w')
+            env = os.environ.copy()
+            env['API_KEY'] = app.config['API_KEY']
+            sub.Popen(['scripts/master.sh', session_id], stdout=f, stderr=f, env=env)
             return redirect(url_for('view', sid=session_id))
     else:
         # Show all authentication errors
@@ -72,7 +77,7 @@ def upload():
 
 @app.route('/view/<sid>')
 def view(sid):
-    if sid.isalnum():
+    if '/' not in sid:
         path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
         if os.path.isdir(path):
             return render_template('view.html', sid=sid, title="Progress for %s" % sid)
@@ -95,7 +100,7 @@ def script_update():
     except ValueError:
         # If progress isn't an int, or if any of the fields are missing, abort.
         abort(400)
-    
+
     # Actually upload the data
     data = {
         "progress": progress,
@@ -106,7 +111,7 @@ def script_update():
 
 @app.route('/api/logs')
 def get_logs():
-    if request.args['sid'].isalnum():
+    if '/' not in request.args['sid']:
         path = os.path.join(app.config['UPLOAD_FOLDER'], request.args['sid'],
                             app.config['LOG_FILE'])
         if os.path.isfile(path):
@@ -115,3 +120,21 @@ def get_logs():
             abort(404)
     else:
         abort(403)
+
+@app.route('/api/upload', methods=['DELETE'])
+def delete_upload():
+    if request.json is None:
+        abort(400)
+
+    if request.json['auth_token'] != app.config['API_KEY']:
+        abort(403)
+
+    if '/' in request.json['sid']:
+        abort(403)
+
+    # Remove the entire upload
+    path = os.path.join(app.config['UPLOAD_FOLDER'], request.json['sid'])
+    rmtree(path)
+
+    # Remove from firebase
+    fbdb.child('sessions').child(request.json['sid']).remove()

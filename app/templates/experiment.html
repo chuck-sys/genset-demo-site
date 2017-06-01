@@ -34,7 +34,7 @@ src="{{ url_for('static', filename='experiment.js') }}"></script>
         <form id="form" action="/upload" method="POST" enctype="multipart/form-data">
             {{ form.csrf_token }}
 
-            <label for="testzip">Zip file for testing against</label>
+            <label for="testzip">CSV file for testing against</label>
             {{ form.testzip }}
             <br>
             
