@@ -16,7 +16,7 @@ def firebase_init():
         "authDomain": "genset-demo-website.firebaseapp.com",
         "databaseURL": "https://genset-demo-website.firebaseio.com",
         "storageBucket": "genset-demo-website.appspot.com",
-        "serviceAccount": app.config["FIREBASE_AUTH_FILE"]
+        #"serviceAccount": app.config["FIREBASE_AUTH_FILE"]
     }
     return pyrebase.initialize_app(config)
 
