@@ -60,7 +60,7 @@ def upload():
             f = open(os.path.join(path, 'logs.txt'), 'w')
             env = os.environ.copy()
             env['API_KEY'] = app.config['API_KEY']
-            # sub.Popen(['python', 'scripts/master.py', session_id], stdout=f, stderr=f, env=env)
+            sub.Popen(['python', 'scripts/master.py', session_id], stdout=f, stderr=f, env=env)
             return redirect(url_for('view', sid=session_id))
     else:
         # Show all authentication errors
