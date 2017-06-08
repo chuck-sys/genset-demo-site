@@ -47,16 +47,11 @@ def upload():
             session_id = os.path.basename(path)
 
             # Save the files
-            for k, v in request.files.items():
-                # Sanity checking
-                if v.filename == '': continue
+            request.files['testcsv'].save(os.path.join(path, app.config['TESTING_FN']))
+            if request.files['trainingcsv'].filename != '':
+                request.files['trainingcsv'].save(os.path.join(path, app.config['TRAINING_FN']))
 
-                sfn = secure_filename(v.filename)
-                if sfn == '':
-                    sfn = v.filename
-                fn = os.path.join(path, sfn)
-                v.save(fn)
-
+            # Be flashy
             link = '<a href="%s" class="alert-link">view page</a>' % url_for('view', sid=session_id)
             success_txt = 'Success! To view progress, go to the %s' % link
             flash(Markup(success_txt))
@@ -65,7 +60,7 @@ def upload():
             f = open(os.path.join(path, 'logs.txt'), 'w')
             env = os.environ.copy()
             env['API_KEY'] = app.config['API_KEY']
-            sub.Popen(['python', 'scripts/master.py', session_id], stdout=f, stderr=f, env=env)
+            # sub.Popen(['python', 'scripts/master.py', session_id], stdout=f, stderr=f, env=env)
             return redirect(url_for('view', sid=session_id))
     else:
         # Show all authentication errors

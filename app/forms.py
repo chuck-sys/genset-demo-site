@@ -9,11 +9,11 @@ csvs = UploadSet('csvs', ('csv',))
 configure_uploads(app, (csvs,))
 
 class ProcessingForm(FlaskForm):
-    testzip = FileField('test archive', validators=[
+    testcsv = FileField('test csv', validators=[
         FileRequired(),
         FileAllowed(csvs, 'CSVs only!')
     ])
-    trainingzip = FileField('training archive', validators=[
+    trainingcsv = FileField('training csv', validators=[
         FileAllowed(csvs, 'CSVs only!')
     ])
     trainingset = SelectField('Training set', [DataRequired()], choices=[

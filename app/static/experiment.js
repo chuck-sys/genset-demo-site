@@ -2,9 +2,9 @@
 
 function updateTrainingVisibility(value) {
     if (value === "custom") {
-        $("#trainingzip").show();
+        $("#trainingcsv").show();
     } else {
-        $("#trainingzip").hide();
+        $("#trainingcsv").hide();
     }
 }
 

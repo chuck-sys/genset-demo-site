@@ -12,9 +12,7 @@ G_CAPTCHA_VERIFY = 'https://www.google.com/recaptcha/api/siteverify'
 G_CAPTCHA_SITEKEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 G_CAPTCHA_SECRET = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
 
-FIREBASE_AUTH_FILE = 'config/fb-admin-key.json'
-FIREBASE_USER_NAME = os.environ.get('FIREBASE_USER_NAME', '')
-FIREBASE_USER_PWD = os.environ.get('FIREBASE_USER_PWD', '')
+FIREBASE_AUTH_FILE = os.environ.get('FIREBASE_AUTH_FILE', '')
 
 API_KEY = 'LXotJB66d3Qm8NP'
 

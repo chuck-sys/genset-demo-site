@@ -35,12 +35,12 @@ src="{{ url_for('static', filename='experiment.js') }}"></script>
             {{ form.csrf_token }}
 
             <label for="testzip">CSV file for testing against</label>
-            {{ form.testzip }}
+            {{ form.testcsv }}
             <br>
             
             <label for="trainingset">The organism to train against</label><br>
             {{ form.trainingset }}
-            {{ form.trainingzip }}
+            {{ form.trainingcsv }}
             <br><br>
             
             <button class="btn btn-primary g-recaptcha"
