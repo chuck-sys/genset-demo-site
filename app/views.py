@@ -56,6 +56,7 @@ def upload():
                     sfn = v.filename
                 fn = os.path.join(path, sfn)
                 v.save(fn)
+
             link = '<a href="%s" class="alert-link">view page</a>' % url_for('view', sid=session_id)
             success_txt = 'Success! To view progress, go to the %s' % link
             flash(Markup(success_txt))

@@ -10,32 +10,35 @@ function script_update {
     curl -X POST -d "$data" -H "$HEADER" "$API_PATH" > /dev/null 2>&1
 }
 
+function synchronize {
+    echo "$2"
+    script_update $1 "$2"
+}
+
 SID=$1
 
-echo "========== INITIALIZING =========="
-script_update 0 "========== INITIALIZING =========="
+synchronize 0 "========== INITIALIZING =========="
 
-sleep 1
+synchronize 10 "Setting variables"
+UPLOAD_PATH="/home/ubuntu/workspace/uploads/$SID"
+TOARFF="scripts/toarff.py"
 
-echo "========== CONVERTING CSV TO ARFF =========="
-script_update 5 "========== CONVERTING CSV TO ARFF =========="
+synchronize 20 "========== CONVERTING CSV TO ARFF =========="
 
-sleep 1
+for csv in "$UPLOAD_PATH/*.csv"; do
+    :
+done
 
-echo "========== RUNNING WEKA =========="
-script_update 20 "========== RUNNING WEKA =========="
+synchronize 40 "========== RUNNING WEKA =========="
 
 sleep 5
 
-echo "========== PARSING WEKA RESULTS =========="
-script_update 80 "========== PARSING WEKA RESULTS =========="
+synchronize 60 "========== PARSING WEKA RESULTS =========="
 
 sleep 2
 
-echo "========== GENERATING RESULTS =========="
-script_update 95 "========== GENERATING RESULTS =========="
+synchronize 80 "========== GENERATING RESULTS =========="
 
 sleep 1
 
-echo "========== FINISHED =========="
-script_update 100 "========== FINISHED =========="
+synchronize 100 "========== FINISHED =========="
