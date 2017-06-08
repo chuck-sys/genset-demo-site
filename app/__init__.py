@@ -22,8 +22,6 @@ def firebase_init():
 
 firebase = firebase_init()
 auth = firebase.auth()
-user = auth.sign_in_with_email_and_password(app.config['FIREBASE_USER_NAME'],
-                                            app.config['FIREBASE_USER_PWD'])
 fbdb = firebase.database()
 
 from . import views
