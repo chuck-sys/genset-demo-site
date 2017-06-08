@@ -18,6 +18,10 @@ def firebase_init():
         "storageBucket": "genset-demo-website.appspot.com",
         "serviceAccount": app.config["FIREBASE_AUTH_FILE"]
     }
+    
+    # Remove if it is a testing build
+    if app.config['FIREBASE_AUTH_FILE'] == '': del config['serviceAccount']
+    
     return pyrebase.initialize_app(config)
 
 firebase = firebase_init()
