@@ -18,9 +18,8 @@ function updateProgressbar(percent) {
 }
 
 function updateOutput(text) {
-    $("#output")
-    .append(text + "<br>");
-    
+    $("#output").append(text + "<br>");
+
     try {
         if (text.includes("Warning")) {
             $(".progress-bar")
@@ -34,9 +33,7 @@ function updateOutput(text) {
             .removeClass("progress-bar-success progress-bar-warning");
         }
     }
-    catch (e) {
-        // TODO
-    }
+    catch (e) {}
 }
 
 $(function() {
