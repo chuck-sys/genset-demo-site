@@ -20,8 +20,9 @@ def firebase_init():
     }
     
     # Remove if it is a testing build
-    if app.config['FIREBASE_AUTH_FILE'] == '': del config['serviceAccount']
-    
+    if app.config['FIREBASE_AUTH_FILE'] == '':
+        del config['serviceAccount']
+
     return pyrebase.initialize_app(config)
 
 firebase = firebase_init()

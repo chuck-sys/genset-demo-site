@@ -60,7 +60,8 @@ def upload():
             f = open(os.path.join(path, 'logs.txt'), 'w')
             env = os.environ.copy()
             env['API_KEY'] = app.config['API_KEY']
-            sub.Popen(['python', 'scripts/master.py', session_id], stdout=f, stderr=f, env=env)
+            sub.Popen(['python', 'scripts/master.py', session_id, request.form['trainingset']],
+                        stdout=f, stderr=f, env=env)
             return redirect(url_for('view', sid=session_id))
     else:
         # Show all authentication errors
@@ -76,7 +77,9 @@ def view(sid):
     if '/' not in sid:
         path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
         if os.path.isdir(path):
-            return render_template('view.html', sid=sid, title="Progress for %s" % sid)
+            using_firebase = 'true' if app.config['FIREBASE'] else 'false'
+            return render_template('view.html',
+            sid=sid, title="Progress for %s" % sid, using_firebase=using_firebase)
         else:
             abort(404)
     else:
