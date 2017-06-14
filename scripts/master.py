@@ -34,7 +34,7 @@ def update_script(progress, text):
     data['auth_token'] = API_KEY
 
     # Send post request
-    resp = requests.post(API_PATH, data=json.dumps(data), headers=HEADER)
+    requests.post(API_PATH, data=json.dumps(data), headers=HEADER)
 
 def update_progress(progress, text):
     print(text)

@@ -1,5 +1,4 @@
 from flask import render_template, redirect, url_for, request, flash, abort, Markup, send_file
-from werkzeug.utils import secure_filename
 from app import app, fbdb
 from .forms import ProcessingForm
 from shutil import rmtree

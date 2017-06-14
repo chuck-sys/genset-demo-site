@@ -46,7 +46,7 @@ $(function() {
             updateProgressbar(snapshot.val());
 
             // If we get to 100, call everything off
-            if (snapshot.val() == 100) {
+            if (snapshot.val() >= 100) {
                 progressRef.off("value");
                 textRef.off("value");
             }
