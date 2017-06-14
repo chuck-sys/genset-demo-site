@@ -1,7 +1,4 @@
-/* global firebase */
-/* global $ */
-/* global sessionID */
-/* global usingFirebase */
+/* global $, firebase, sessionID, usingFirebase */
 var config = {
     apiKey: "AIzaSyBjM8SOL5rGiUq9gEF6NvBOMAWDO6Vfoqo",
     authDomain: "genset-demo-website.firebaseapp.com",
