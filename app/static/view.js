@@ -33,6 +33,23 @@ function updateOutput(text) {
     catch (e) {}
 }
 
+function deleteSession() {
+    $.ajax({
+        url: "/api/upload/" + sessionID,
+        type: "DELETE",
+    })
+    .done(function(resp) {
+        window.location.href = "/";
+    });
+}
+
+function downloadSession() {
+    $.get("/api/download/" + sessionID)
+    .done(function(resp) {
+        alert(resp);
+    });
+}
+
 $(function() {
     if (usingFirebase) {
         var progressRef = firebase.database().ref("sessions/" + sessionID + "/progress");

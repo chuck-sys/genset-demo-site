@@ -1,6 +1,8 @@
-from flask import render_template, redirect, url_for, request, flash, abort, Markup, send_file
+from flask import render_template, redirect, url_for, request, flash, abort,\
+                    Markup, send_file, send_from_directory
 from app import app, fbdb
 from .forms import ProcessingForm
+from . import utils
 from shutil import rmtree
 import os
 import tempfile
@@ -116,24 +118,35 @@ def get_logs():
     else:
         abort(403)
 
-@app.route('/api/upload', methods=['DELETE'])
-def delete_upload():
-    if request.json is None:
+@app.route('/api/download/<sid>')
+def download(sid):
+    if not utils.sid_is_valid(sid):
         abort(400)
 
-    if request.json['auth_token'] != app.config['API_KEY']:
-        abort(403)
+    path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
 
-    if '/' in request.json['sid']:
-        abort(403)
+    if os.path.isfile(os.path.join(path, app.config['RESULTS_ZIP'])):
+        return send_from_directory(directory=path, filename=app.config['RESULTS_ZIP'])
+    else:
+        abort(404)
 
-    # FIXME: Only works for SIDs with length < 10
-    if len(request.json['sid']) >= 10:
-        abort(403)
+@app.route('/api/upload/<sid>', methods=['DELETE'])
+def delete_upload(sid):
+    if not utils.sid_is_valid(sid):
+        abort(400)
 
     # Remove the entire upload
-    path = os.path.join(app.config['UPLOAD_FOLDER'], request.json['sid'])
-    rmtree(path)
+    path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
+
+    # If it exists, of course
+    if os.path.isdir(path):
+        if not app.config['TESTING']:
+            rmtree(path)
+    else:
+        abort(403)
 
     # Remove from firebase
-    fbdb.child('sessions').child(request.json['sid']).remove()
+    fbdb.child('sessions').child(sid).remove()
+
+    flash('Success! Deleted run data for "%s"' % sid)
+    return '', 200
