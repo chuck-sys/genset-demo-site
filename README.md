@@ -59,7 +59,9 @@ G_CAPTCHA_SECRET='SOME SECRET'
 API_KEY='SOME KEY'
 ```
 
-Put the above into `.env` in the root directory.
+Put the above into `.env` in the root directory. For more variables, consult
+the accompanying `sample_env`. Remember that the file will be parsed with
+`bash`; comments start with `#`.
 
 ### Python
 
