@@ -40,6 +40,14 @@ def update_progress(progress, text):
     print(text)
     update_script(progress, text)
 
+def update_progress_wrapper(progress, p):
+    update_progress(progress, str(p.stderr + b'\n' + p.stdout, 'utf-8'))
+
+def process_return_code(p):
+    if p.returncode != 0:
+        update_progress(100, "Aborting...")
+        sys.exit(0)
+
 # INITIALIZATION
 update_progress(0, make_header('initializing'))
 
@@ -54,10 +62,14 @@ starting = 20
 interval = len(g) / 20.0
 for f in g:
     # Convert for every csv file
+    f = os.path.basename(f)
     arff_file = f.replace('.csv', '.arff')
-    out = sub.check_output(['python', csv_script, f, '-o', arff_file])
-    update_progress(starting, str(out, 'utf-8'))
+    p = sub.run(['python', csv_script, f, '-o', arff_file],
+                    stdout=sub.PIPE, stderr=sub.PIPE, cwd=SESSION_FOLDER)
+    update_progress_wrapper(starting, p)
     starting += interval
+
+    process_return_code(p)
 
 # RUNNING WEKA
 update_progress(40, make_header('running weka'))
@@ -79,8 +91,11 @@ else:
 r_dir = os.path.join(SESSION_FOLDER, RESULTS_DIR)
 os.mkdir(r_dir)
 
-out = sub.check_output(['python', weka_script, training, testing, '-d', r_dir])
-update_progress(50, str(out, 'utf-8'))
+p = sub.run(['python', weka_script, training, testing, '-d', r_dir],
+                stdout=sub.PIPE, stderr=sub.PIPE)
+update_progress_wrapper(50, p)
+
+process_return_code(p)
 
 # WEKA RESULT PARSING
 update_progress(60, make_header('parsing weka results'))
@@ -96,18 +111,23 @@ for f in g:
         fn = testing.replace('.arff', '.csv')
     p = sub.run(['python', predict_script, fn, f, f + '.new'],
                 stdout=sub.PIPE, stderr=sub.PIPE)
-    update_progress(starting, str(p.stderr, 'utf-8'))
-    update_progress(starting, str(p.stdout, 'utf-8'))
+    # Rename the .new file
+    os.rename(f + '.new', f)
+    update_progress_wrapper(starting, p)
     starting += interval
+
+    process_return_code(p)
 
 # RESULT GENERATION
 update_progress(80, make_header('generating results'))
 
 # Pack entire results folder into a zip
 zip_out = os.path.join(SESSION_FOLDER, 'results.zip')
-p = sub.run(['zip', '-r', zip_out, r_dir], stdout=sub.PIPE, stderr=sub.PIPE)
-update_progress(90, str(p.stderr, 'utf-8'))
-update_progress(90, str(p.stdout, 'utf-8'))
+p = sub.run(['zip', '-r', zip_out, RESULTS_DIR],
+            stdout=sub.PIPE, stderr=sub.PIPE, cwd=SESSION_FOLDER)
+update_progress_wrapper(90, p)
+
+process_return_code(p)
 
 # FINISHED!
 update_progress(100, make_header('finished'))

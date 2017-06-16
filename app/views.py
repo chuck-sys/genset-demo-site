@@ -53,8 +53,8 @@ def upload():
                 request.files['trainingcsv'].save(os.path.join(path, app.config['TRAINING_FN']))
 
             # Be flashy
-            link = '<a href="%s" class="alert-link">view page</a>' % url_for('view', sid=session_id)
-            success_txt = 'Success! To view progress, go to the %s' % link
+            link = '<a href="%s" class="alert-link">page</a>' % url_for('view', sid=session_id)
+            success_txt = 'Success! To view progress later, bookmark the %s' % link
             flash(Markup(success_txt))
 
             # If the path exists, render the view
