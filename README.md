@@ -25,8 +25,8 @@ pip install numpy
 Thus, to install everything necessary, you must run:
 
 ```sh
-# Set up virtual envrionment
-virtualenv venv
+# Set up virtual environment (with python 3.5 or higher)
+virtualenv -p python3.5 venv
 . venv/bin/activate
 
 # Install packages for the scripts
