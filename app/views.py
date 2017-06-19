@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request, flash, abort,\
-                    Markup, send_file, send_from_directory
+                    Markup, send_from_directory
 from app import app, fbdb
 from .forms import ProcessingForm
 from . import utils
@@ -109,10 +109,10 @@ def script_update():
 @app.route('/api/logs')
 def get_logs():
     if '/' not in request.args['sid']:
-        path = os.path.join(app.config['UPLOAD_FOLDER'], request.args['sid'],
-                            app.config['LOG_FILE'])
-        if os.path.isfile(path):
-            return send_file(path)
+        path = os.path.join(app.config['UPLOAD_FOLDER'], request.args['sid'])
+        if os.path.isfile(os.path.join(path, app.config['LOG_FILE'])):
+            return send_from_directory(directory=path,
+                                        filename=app.config['LOG_FILE'])
         else:
             abort(404)
     else:
@@ -126,7 +126,8 @@ def download(sid):
     path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
 
     if os.path.isfile(os.path.join(path, app.config['RESULTS_ZIP'])):
-        return send_from_directory(directory=path, filename=app.config['RESULTS_ZIP'])
+        return send_from_directory(directory=path,
+                                    filename=app.config['RESULTS_ZIP'])
     else:
         abort(404)
 
