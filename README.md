@@ -5,6 +5,12 @@
 
 This is the code for the GENSET website, for demonstrating the GENSET project.
 
+## Pre-requisites
+
+- python>=3.5
+- virtualenv
+- jdk>=1.7
+
 ## Installation
 
 Since the website scripts require `python-weka-wrapper3`, `python3` must be
@@ -31,7 +37,6 @@ virtualenv -p python3.5 venv
 
 # Install packages for the scripts
 pip install numpy
-pip install javabridge python-weka-wrapper3
 
 # Install the rest of the Flask packages
 pip install -r requirements.txt
