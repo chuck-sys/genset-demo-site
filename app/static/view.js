@@ -35,7 +35,7 @@ function updateOutput(text) {
 
 function deleteSession() {
     $.ajax({
-        url: "/api/upload/" + sessionID,
+        url: "/api/uploads/" + sessionID,
         type: "DELETE",
     })
     .done(function(resp) {
@@ -67,7 +67,7 @@ $(function() {
         cache: false
     });
 
-    $.get("/api/logs?sid=" + sessionID, function(data) {
+    $.get("/api/uploads/" + sessionID + "/logs", function(data) {
         // Add original log text to output
         $("#output").html(data);
     });
