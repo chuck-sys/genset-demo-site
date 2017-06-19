@@ -88,6 +88,8 @@ def view(sid):
 
 @app.route('/api/script_update', methods=['POST'])
 def script_update():
+    if not app.config['FIREBASE']:
+        abort(400)
     if request.json is None:
         abort(400)
     if request.json['auth_token'] != app.config['API_KEY']:
@@ -147,7 +149,8 @@ def delete_upload(sid):
         abort(403)
 
     # Remove from firebase
-    fbdb.child('sessions').child(sid).remove()
+    if app.config['FIREBASE']:
+        fbdb.child('sessions').child(sid).remove()
 
     flash('Success! Deleted run data for "%s"' % sid)
     return '', 200
