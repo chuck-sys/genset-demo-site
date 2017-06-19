@@ -43,13 +43,6 @@ function deleteSession() {
     });
 }
 
-function downloadSession() {
-    $.get("/api/download/" + sessionID)
-    .done(function(resp) {
-        alert(resp);
-    });
-}
-
 $(function() {
     if (usingFirebase) {
         var progressRef = firebase.database().ref("sessions/" + sessionID + "/progress");
