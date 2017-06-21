@@ -1,0 +1,102 @@
+<blockquote>
+    All uploaded files must be in comma-separated values (CSV) format. For
+    specifications on CSV file headers, check
+    <a href="https://github.com/cheukyin699/bioinf-data-collection/blob/master/docs/filename_meanings.md">this</a>
+    out. The CSV headers are at the bottom, under heading
+    <strong>Content in Various Types of Output Files</strong>.
+</blockquote>
+
+<hr>
+
+<h2>Specifications</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Testing Set CSV</h3>
+        
+        <p>
+            This CSV must have the same format as the above specifications.
+        </p>
+    </div>
+    
+    <div class="col-md-4 vl">
+        <h3>Training Set CSV</h3>
+        
+        <p>
+            This CSV must have the same format as the above specifications. If you wish,
+            you may upload your own CSV to train against the testing set. Otherwise,
+            selecting an organism from the list should suffice.
+        </p>
+    </div>
+    
+    <div class="col-md-4">
+        <h3>Sample Files</h3>
+        
+        <p>
+            Sample files are provided so that you could see the correct formatting of
+            the CSV headers and content.
+        </p>
+    </div>
+</div>
+
+<hr>
+
+<h2>Instructions</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Basic Usage</h3>
+        
+        <p>
+            Once you have the testing set and the training set (per specifications),
+            you may start uploading.
+        </p>
+        
+        <ol>
+            <li>Go to <em>Upload</em> tab</li>
+            <li>Upload testing set CSV</li>
+            <li>
+                Select organism to train against <strong>OR</strong> select
+                <em>Custom</em> and upload your custom training set
+            </li>
+            <li>Press <em>Upload</em> button</li>
+            <li>Wait until the progress bar goes to 100%</li>
+            <li>Click <em>Download</em> button</li>
+            <li>After successfully saving the results, click <em>Delete</em> button</li>
+        </ol>
+        
+        <p>
+            All uploaded files will be deleted automatically 1 (one) day proceeding the
+            upload, regardless of whether the run was successful or not.
+        </p>
+    </div>
+
+    <div class="col-md-6">
+        <h3>Advanced Usage - More than 20 attributes</h3>
+        
+        <p>
+            For the slightly advanced user, you may think that 20 attributes are far
+            from enough. In this case, there are a few things that you'd ought to know.
+        </p>
+        
+        <p>
+            When CSV files are uploaded, they are sent to a directory and preprocessed.
+            A script removes the <em>protein name</em> (1st column) and <em>A280 extinction
+            coefficients (1mg/mL)</em> (14th column), temporarily. The effector attribute
+            is then assumed to be the last column.
+        </p>
+        
+        <p>
+            In order to add a new attribute, you must insert columns between the 14th
+            column and the last column.
+        </p>
+        
+        <p>
+            In order to remove an existing attribute, you must replace said column with
+            a column full of useless values. If the column you need to remove is to the
+            left of the 14th column you can remove it just fine. If it is to the right
+            of the 14th column, you can switch said column with a needed column to the
+            right of the 14th column, and delete the column.
+        </p>
+    </div>
+</div>

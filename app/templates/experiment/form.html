@@ -1,0 +1,23 @@
+<form id="form" action="/upload" method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+
+    <label for="testzip">CSV file for testing against</label>
+    {{ form.testcsv }}
+    <br>
+    
+    <label for="trainingset">The organism to train against</label><br>
+    {{ form.trainingset }}
+    {{ form.trainingcsv }}
+    <br><br>
+    
+    <button class="btn btn-primary g-recaptcha"
+    data-sitekey="{{ sitekey }}"
+    data-callback="onSubmitForm"
+    data-size="invisible">Upload</Button>
+</form>
+
+<script type="text/javascript">
+    function onSubmitForm(token) {
+        document.getElementById("form").submit();
+    }
+</script>

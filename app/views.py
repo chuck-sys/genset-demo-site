@@ -18,7 +18,7 @@ def index():
 @app.route('/experiment', methods=['GET'])
 def experiment():
     form = ProcessingForm(request.form)
-    return render_template('experiment.html',
+    return render_template('experiment/index.html',
                             title="Try it Out!",
                             sitekey=app.config['G_CAPTCHA_SITEKEY'],
                             form=form)
