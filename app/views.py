@@ -108,10 +108,10 @@ def script_update():
     fbdb.child('sessions').child(sid).set(data)
     return '', 200
 
-@app.route('/api/logs')
-def get_logs():
-    if '/' not in request.args['sid']:
-        path = os.path.join(app.config['UPLOAD_FOLDER'], request.args['sid'])
+@app.route('/api/uploads/<sid>/logs')
+def get_logs(sid):
+    if '/' not in sid:
+        path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
         if os.path.isfile(os.path.join(path, app.config['LOG_FILE'])):
             return send_from_directory(directory=path,
                                         filename=app.config['LOG_FILE'])
@@ -120,7 +120,7 @@ def get_logs():
     else:
         abort(403)
 
-@app.route('/api/download/<sid>')
+@app.route('/api/uploads/<sid>/download')
 def download(sid):
     if not utils.sid_is_valid(sid):
         abort(400)
@@ -133,7 +133,7 @@ def download(sid):
     else:
         abort(404)
 
-@app.route('/api/upload/<sid>', methods=['DELETE'])
+@app.route('/api/uploads/<sid>', methods=['DELETE'])
 def delete_upload(sid):
     if not utils.sid_is_valid(sid):
         abort(400)
