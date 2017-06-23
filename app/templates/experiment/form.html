@@ -1,13 +1,22 @@
 <form id="form" action="/upload" method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
-    <label for="testzip">CSV file for testing against</label>
-    {{ form.testcsv }}
+    <div class="input-group">
+        <label for="testzip" class="input-group-addon btn-file">
+            Browse {{ form.testcsv }}
+        </label>
+        <input class="form-control" type="text" name="1"/>
+    </div>
     <br>
     
     <label for="trainingset">The organism to train against</label><br>
     {{ form.trainingset }}
-    {{ form.trainingcsv }}
+    <div class="input-group" id="training-input">
+        <label for="trainingcsv" class="input-group-addon btn-file">
+            Browse {{ form.trainingcsv }}
+        </label>
+        <input class="form-control" type="text" name="2" />
+    </div>
     <br><br>
     
     <button class="btn btn-primary g-recaptcha"

@@ -1,12 +1,15 @@
 body {
     margin: 0;
-    font-family: Times, serif;
+    font-family: Helvetica, sans-serif;
     font-size: 16px;
 }
 
-h1, h2, h3, h4, h5, h6, .navbar {
-    font-family: Helvetica, sans-serif;
+h1, h2, h3, h4, h5, h6, .navbar, .nav {
     font-variant: small-caps;
+}
+
+form {
+    padding: 1em;
 }
 
 .container-fluid {
@@ -28,13 +31,11 @@ h1, h2, h3, h4, h5, h6, .navbar {
     text-align: right;
     filter: alpha(opacity=0);
     opacity: 0;
-    outline: none;
     background: white;
-    cursor: inherit;
+    cursor: pointer;
     display: block;
 }
 
-.vl {
-    border-left: thin solid black;
-    border-right: thin solid black;
+#trainingset {
+    margin-bottom: 1em;
 }

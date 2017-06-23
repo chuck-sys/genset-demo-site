@@ -21,7 +21,8 @@ def experiment():
     return render_template('experiment/index.html',
                             title="Try it Out!",
                             sitekey=app.config['G_CAPTCHA_SITEKEY'],
-                            form=form)
+                            form=form,
+                            files=utils.SAMPLE_FILES)
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -71,7 +72,8 @@ def upload():
     return redirect(url_for('experiment',
                             title="Try it Out!",
                             sitekey=app.config['G_CAPTCHA_SITEKEY'],
-                            form=form))
+                            form=form,
+                            files=utils.SAMPLE_FILES))
 
 @app.route('/view/<sid>')
 def view(sid):

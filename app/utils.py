@@ -1,3 +1,16 @@
+
+# Variables
+SAMPLE_FILES = [
+    ('Y. pestris', 'https://github.com/'),
+    ('S. dysenteriae', 'https://github.com/'),
+    ('S. typhimurium', 'https://github.com/'),
+    ('P. syringae', 'https://github.com/'),
+    ('X. campestris', 'https://github.com/'),
+    ('C. trachematis', 'https://github.com/'),
+    ('S. fredii', 'https://github.com/'),
+]
+
+# Functions
 def sid_is_valid(sid):
     '''
     Checks to see if the session ID is valid or not. Valid session IDs do not

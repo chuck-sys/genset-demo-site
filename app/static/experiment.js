@@ -2,17 +2,26 @@
 
 function updateTrainingVisibility(value) {
     if (value === "custom") {
-        $("#trainingcsv").show();
+        $("#training-input").show();
     } else {
-        $("#trainingcsv").hide();
+        $("#training-input").hide();
     }
 }
 
+$(document).on('change', ':file', function() {
+    var input = $(this);
+    var label = input.val().replace(/\\/g,'/').replace(/.*\//, '');
+    input.trigger('fileselect', [label]);
+})
+
 $(function() {
-    // Hide as default
     updateTrainingVisibility($("#trainingset").val());
-    
+
     $("#trainingset").on("change", function() {
-        updateTrainingVisibility(this.value);
+        updateTrainingVisibility($(this).val());
+    });
+
+    $(':file').on('fileselect', function(evt, label) {
+        $(this).parent().next('input[type=text]').val(label);
     });
 });
