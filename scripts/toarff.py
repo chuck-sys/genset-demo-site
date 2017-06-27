@@ -45,7 +45,7 @@ out = args.out
 with open(fn, 'r') as read, open(newfn, 'w') as write:
     for l in read.readlines():
         s = l.split(',')
-        del s[13], s[0]
+        del s[0]
         write.write(','.join(s))
 
 # Stage 2

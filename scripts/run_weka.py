@@ -31,6 +31,7 @@ from weka.core.converters import Loader
 from weka.classifiers import Classifier, Evaluation, PredictionOutput
 import numpy as np
 import sys
+import os
 import argparse as ap
 
 parser = ap.ArgumentParser(
@@ -40,8 +41,8 @@ epilog='Requires java (duh)'
 
 parser.add_argument('training', help='Training data in ARFF format')
 parser.add_argument('testing', help='Testing data in ARFF format')
-parser.add_argument('-d', '--directory', default='./',
-    help='Directory for output files (default: ./)')
+parser.add_argument('-d', '--directory', default='results/',
+    help='Directory for output files (default: results/)')
 
 args = parser.parse_args()
 
@@ -131,17 +132,25 @@ def intersperse(l, s):
 
 P_OUT = "weka.classifiers.evaluation.output.prediction.CSV"
 
-# FIXME
 TRAINING_FN = args.training
 TESTING_FN = args.testing
 RES_FOLDER = args.directory
-VOTE_OPTIONS = list(map(lambda s: "weka.classifiers" + s, [
+CLASSIFIERS = list(map(lambda s: "weka.classifiers" + s, [
     ".bayes.BayesNet",
     ".bayes.NaiveBayes",
     ".functions.Logistic",
     ".functions.MultilayerPerceptron",
-    ".functions.SMO"
+    ".functions.SMO",
+    ".meta.Vote"
 ]))
+OPTIONS = [
+    '-D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5'.split(),
+    [],
+    '-R 1.0E-8 -M -1 -num-decimal-places 4'.split(),
+    '-L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a'.split(),
+    '-C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K'.split() + ['weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007', '-calibrator', 'weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4'],
+    '-S 1 -B'.split() + ['weka.classifiers.bayes.BayesNet -D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5', '-B', 'weka.classifiers.bayes.NaiveBayes', '-B', 'weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4', '-B', 'weka.classifiers.functions.MultilayerPerceptron -L 0.3 -M 0.2 -N 500 -V 0 -S 0 -E 20 -H a', '-B', 'weka.classifiers.functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K \"weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007\" -calibrator \"weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4\"', '-R', 'AVG'],
+]
 
 jvm.start()
 
@@ -152,16 +161,18 @@ testing = loader.load_file(TESTING_FN)
 training.class_is_last()
 testing.class_is_last()
 
+# Try to make the directory
+try:
+    os.mkdir(RES_FOLDER)
+except:
+    pass
 
 # Go through all options + vote
-for cfr in VOTE_OPTIONS + ["weka.classifiers.meta.Vote"]:
+for cfr, op in zip(CLASSIFIERS, OPTIONS):
     method = cfr.split('.')[-1]
     options = None
-    # The vote exception
-    if "Vote" in cfr:
-        options = intersperse(VOTE_OPTIONS, '-B')
 
-    cls = Classifier(classname=cfr, options=options)
+    cls = Classifier(classname=cfr, options=op)
     test_evl = Evaluation(testing)
     train_evl = Evaluation(training)
     train_out = PredictionOutput(classname=P_OUT)

@@ -103,7 +103,7 @@ update_progress(60, make_header('parsing weka results'))
 predict_script = os.path.join(SCRIPTS_FOLDER, 'prediction_fixer.py')
 g = glob.glob(os.path.join(SESSION_FOLDER, RESULTS_DIR, '*.out.csv'))
 starting = 80
-interval = len(g) / 20.0
+interval = len(g) / 10.0
 for f in g:
     # Iterate over every single predictions file
     fn = training.replace('.arff', '.csv')
@@ -119,13 +119,13 @@ for f in g:
     process_return_code(p)
 
 # RESULT GENERATION
-update_progress(80, make_header('generating results'))
+update_progress(90, make_header('generating results'))
 
 # Pack entire results folder into a zip
 zip_out = os.path.join(SESSION_FOLDER, 'results.zip')
 p = sub.run(['zip', '-r', zip_out, RESULTS_DIR],
             stdout=sub.PIPE, stderr=sub.PIPE, cwd=SESSION_FOLDER)
-update_progress_wrapper(90, p)
+update_progress_wrapper(95, p)
 
 process_return_code(p)
 
