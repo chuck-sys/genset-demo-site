@@ -7,35 +7,35 @@ src="{{ url_for('static', filename='experiment.js') }}"></script>
 {% endblock %}
 
 {% block content %}
-
-<ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active">
-        <a href="#instructions" aria-controls="instructions" role="tab" data-toggle="tab">
-            Instructions
-        </a>
-    </li>
-    <li role="presentation">
-        <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab">
-            Upload
-        </a>
-    </li>
-    <li role="presentation">
-        <a href="#sample-files" aria-controls="sample-files" role="tab" data-toggle="tab">
-            Sample Files
-        </a>
-    </li>
-</ul>
-
-<div class="tab-content">
-    <div class="tab-pane active" id="instructions">
-        {% include "experiment/instructions.html" %}
-    </div>
-    <div class="tab-pane" id="upload">
-        {% include "experiment/form.html" %}
-    </div>
-    <div class="tab-pane" id="sample-files">
-        {% include "experiment/samples.html" %}
+<div class="container-fluid">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#instructions" aria-controls="instructions" role="tab" data-toggle="tab">
+                Instructions
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab">
+                Upload
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#sample-files" aria-controls="sample-files" role="tab" data-toggle="tab">
+                Sample Files
+            </a>
+        </li>
+    </ul>
+    
+    <div class="tab-content">
+        <div class="tab-pane active" id="instructions">
+            {% include "experiment/instructions.html" %}
+        </div>
+        <div class="tab-pane" id="upload">
+            {% include "experiment/form.html" %}
+        </div>
+        <div class="tab-pane" id="sample-files">
+            {% include "experiment/samples.html" %}
+        </div>
     </div>
 </div>
-
 {% endblock %}

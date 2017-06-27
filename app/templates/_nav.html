@@ -1,20 +1,8 @@
-<nav class='navbar navbar-default' role=navigation>
-    <div class="navbar-header">
-        <a class="navbar-brand" href="{{ url_for('index') }}">Genset Home</a>
-        <button type='button' class='navbar-toggle collapsed'
-                data-toggle='collapse' data-target='nav-collapsed'
-                aria-expanded=false>
-            <span class="sr_only">Toggle Navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-    </div>
-    
-    <div class='collapse navbar-collapse' id='nav-collapsed'>
-        <ul class='nav navbar-nav navbar-right'>
-            <li id=index><a href="{{ url_for('index') }}">About</a></li>
-            <li id=experiment><a href="{{ url_for('experiment') }}">Try It Out</a></li>
-        </ul>
-    </div>
-</nav>
+<ul class="navigation">
+    <li>
+        <a href="{{ url_for('index') }}">Home</a>
+    </li>
+    <li>
+        <a href="{{ url_for('experiment') }}">Try it out</a>
+    </li>
+</ul>

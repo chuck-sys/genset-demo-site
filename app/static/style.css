@@ -98,6 +98,30 @@ form {
     padding-right: 5rem;
 }
 
+ul.navigation {
+    position: fixed;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.navigation li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    margin: 1em 0;
+    text-decoration: none;
+    color: #cfcfcf;
+    background: #824c42;
+    width: 10rem;
+    
+    /* clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%); */
+    transition: all 0.2s ease;
+}
+
+ul.navigation li a:hover {
+    width: 110%;
+}
+
 #trainingset {
     margin-bottom: 1rem;
 }
