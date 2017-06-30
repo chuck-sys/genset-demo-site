@@ -1,9 +1,9 @@
 from flask import render_template, redirect, url_for, request, flash, abort,\
                     Markup, send_from_directory
 from app import app, fbdb
-from .forms import ProcessingForm
+from .forms import ProcessingForm, FILE_MAP
 from . import utils
-from shutil import rmtree
+from shutil import copyfile, rmtree
 import os
 import tempfile
 import requests
@@ -50,8 +50,16 @@ def upload():
 
             # Save the files
             request.files['testcsv'].save(os.path.join(path, app.config['TESTING_FN']))
+
             if request.files['trainingcsv'].filename != '':
                 request.files['trainingcsv'].save(os.path.join(path, app.config['TRAINING_FN']))
+            else:
+                try:
+                    fn = FILE_MAP[request.form['trainingset']]
+                    copyfile(os.path.join(app.config['TRAINING_FOLDER'], fn),
+                             os.path.join(path, app.config['TRAINING_FN']))
+                except KeyError:
+                    flash('Error: \'%s\' is not supported' % request.form['trainingset'])
 
             # Be flashy
             link = '<a href="%s" class="alert-link">page</a>' % url_for('view', sid=session_id)

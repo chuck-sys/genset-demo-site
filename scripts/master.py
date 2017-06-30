@@ -79,13 +79,7 @@ weka_script = os.path.join(SCRIPTS_FOLDER, 'run_weka.py')
 # Get training and testing filename
 training = ''
 testing = os.path.join(SESSION_FOLDER, TESTING_FN.replace('.csv', '.arff'))
-if TRAINING_ABBRV == 'custom':
-    # Custom means that, well, it's custom
-    training = os.path.join(SESSION_FOLDER, TRAINING_FN.replace('.csv', '.arff'))
-else:
-    # Not supported
-    update_progress(100, '%s isn\'t supported yet; aborting.' % TRAINING_ABBRV)
-    sys.exit(0)
+training = os.path.join(SESSION_FOLDER, TRAINING_FN.replace('.csv', '.arff'))
 
 # Make results directory
 r_dir = os.path.join(SESSION_FOLDER, RESULTS_DIR)
