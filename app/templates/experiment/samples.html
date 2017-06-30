@@ -1,4 +1,4 @@
-<table class="table table-hover">
+<table class="table">
     <tr>
         <th>Organism</th>
         <th>Link</th>
@@ -6,7 +6,7 @@
     {% for organism, link in files %}
     <tr>
         <td>{{ organism }}</td>
-        <td><a href="{{ link }}" class="btn btn-default">Get</a></td>
+        <td><a href="{{ link }}" class="button">Get</a></td>
     </tr>
     {% endfor %}
 </table>
