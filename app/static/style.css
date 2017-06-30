@@ -114,12 +114,12 @@ ul.navigation li a {
     background: #824c42;
     width: 10rem;
     
-    /* clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%); */
     transition: all 0.2s ease;
 }
 
 ul.navigation li a:hover {
     width: 110%;
+    opacity: 0.9;
 }
 
 #trainingset {
