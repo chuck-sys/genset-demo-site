@@ -32,12 +32,22 @@ h1, h2, h3, h4, h5, h6, .navbar, .nav {
     color: #cfcfcf;
 }
 
+a {
+    color: #6c8fda;
+}
+
+a:hover {
+    color: #6a8dd8;
+    text-decoration: none;
+}
+
 form {
     padding: 1rem;
 }
 
 .container-fluid {
     margin: 2rem auto;
+    padding: 1rem;
     width: 60rem;
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 1em 1em rgba(150, 150, 150, 0.1);
@@ -96,6 +106,23 @@ form {
 
 .title-card small {
     padding-right: 5rem;
+}
+
+.samples {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 15%;
+    font-size: 1.1rem;
+}
+
+.samples td {
+    text-align: center;
+    padding: 1rem;
+}
+
+.samples tr:nth-of-type(even) {
+    background: rgba(123, 71, 60, 0.05);
 }
 
 ul.navigation {
