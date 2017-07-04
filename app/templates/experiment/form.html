@@ -1,11 +1,12 @@
 <form id="form" action="/upload" method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
+    <label>The organism for testing</label><br>
     <div class="input-group">
         <label for="testzip" class="input-group-addon btn-file">
             Browse {{ form.testcsv }}
         </label>
-        <input class="form-control" type="text" name="1"/>
+        <input class="form-control" type="text" name="1" />
     </div>
     <br>
     
@@ -19,10 +20,11 @@
     </div>
     <br><br>
     
-    <button class="btn btn-primary g-recaptcha"
+    <button class="button button-default g-recaptcha"
     data-sitekey="{{ sitekey }}"
     data-callback="onSubmitForm"
-    data-size="invisible">Upload</Button>
+    data-size="invisible"
+    style="float:right">Upload</Button>
 </form>
 
 <script type="text/javascript">

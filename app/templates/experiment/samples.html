@@ -1,8 +1,8 @@
-<table class="samples">
+<div class="samples">
     {% for organism, link in files %}
-    <tr>
-        <td>{{ organism }}</td>
-        <td><a href="{{ link }}" class="button">Get</a></td>
-    </tr>
+    <div>
+        <span>{{ organism }}</span>
+        <a href="{{ link }}" class="button button-primary">Get</a>
+    </div>
     {% endfor %}
-</table>
+</div>
