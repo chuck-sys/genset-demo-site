@@ -1,25 +1,31 @@
+<h2>Upload</h2>
+
 <form id="form" action="/upload" method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
-    <label>The organism for testing</label><br>
-    <div class="input-group">
-        <label for="testzip" class="input-group-addon btn-file">
-            Browse {{ form.testcsv }}
-        </label>
-        <input class="form-control" type="text" name="1" />
+    <div class="item">
+        <label>The organism for testing</label><br>
+        <div class="input-group">
+            <label for="testzip" class="input-group-addon btn-file">
+                Browse {{ form.testcsv }}
+            </label>
+            <input class="form-control" type="text" name="1" />
+        </div>
+        <br>
     </div>
-    <br>
-    
-    <label for="trainingset">The organism to train against</label><br>
-    {{ form.trainingset }}
-    <div class="input-group" id="training-input">
-        <label for="trainingcsv" class="input-group-addon btn-file">
-            Browse {{ form.trainingcsv }}
-        </label>
-        <input class="form-control" type="text" name="2" />
+
+    <div class="item">
+        <label for="trainingset">The organism to train against</label><br>
+        {{ form.trainingset }}
+        <div class="input-group" id="training-input">
+            <label for="trainingcsv" class="input-group-addon btn-file">
+                Browse {{ form.trainingcsv }}
+            </label>
+            <input class="form-control" type="text" name="2" />
+        </div>
+        <br><br>
     </div>
-    <br><br>
-    
+
     <button class="button button-default g-recaptcha"
     data-sitekey="{{ sitekey }}"
     data-callback="onSubmitForm"
