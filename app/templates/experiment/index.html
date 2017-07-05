@@ -9,7 +9,9 @@ src="{{ url_for('static', filename='experiment.js') }}"></script>
 {% block content %}
 <div class="container-fluid">
     {% include "experiment/instructions.html" %}
+    <hr>
     {% include "experiment/form.html" %}
+    <hr>
     {% include "experiment/samples.html" %}
 </div>
 {% endblock %}
