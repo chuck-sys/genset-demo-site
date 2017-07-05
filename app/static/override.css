@@ -1,0 +1,77 @@
+html {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+body {
+    background: #38446e;
+    color: #b0b7cf;
+    margin: 0;
+    font-size: 1rem;
+}
+
+h1 {
+    font-size: 2.441rem;
+}
+
+h2 {
+    font-size: 1.953rem;
+}
+
+h3 {
+    font-size: 1.563rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar, .nav {
+    margin-bottom: 1rem;
+    font-variant: small-caps;
+    color: #cfcfcf;
+}
+
+a {
+    color: #6c8fda;
+}
+
+a:hover {
+    color: #6a8dd8;
+    text-decoration: none;
+}
+
+form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    padding: 1rem;
+}
+
+select {
+      background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2NmY2ZjZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat 100% 50%;
+	background-color: #cfcfcf;
+	color: #555;
+	width: 10rem;
+	border: none;
+	border-radius: 4px;
+	text-indent: 0.5rem;
+	padding: 0.2rem 0;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+select option {
+    text-indent: 0.5rem;
+    padding: 0.1rem 0;
+}
+
+section {
+    padding: 2.5rem 0;
+}
+
+code {
+    background: #5E688A;
+    color: #bababa;
+}

@@ -1,10 +1,14 @@
 <h2>Samples</h2>
 
+<p>
+    Click a button to download - right click and click <code>Save Page As...</code>.
+</p>
+
 <div class="samples">
     {% for organism, link in files %}
     <div>
         <span>{{ organism }}</span>
-        <a href="{{ link }}" class="button button-primary">Get</a>
+        <a href="{{ link }}" class="button button-primary" target="_blank">Download</a>
     </div>
     {% endfor %}
 </div>
