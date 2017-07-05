@@ -5,9 +5,13 @@
 </p>
 
 <div class="samples">
-    {% for organism, link in files %}
+    {% for organism, link in files | sort(attribute=0) %}
     <div>
+        {% if organism | length > 20 %}
+        <span data-toggle="tooltip" title="{{ organism }}">{{ organism[:20] + '...' }}</span>
+        {% else %}
         <span>{{ organism }}</span>
+        {% endif %}
         <a href="{{ link }}" class="button button-primary" target="_blank">Download</a>
     </div>
     {% endfor %}

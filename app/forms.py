@@ -25,12 +25,11 @@ class ProcessingForm(FlaskForm):
         FileAllowed(csvs, 'CSVs only!')
     ])
     trainingset = SelectField('Training set', [DataRequired()], choices=[
-        ('ysc', 'Y. pestis'),
+        ('ecoli', 'E. coli'),
         ('spi1', 'S. dysenteriae'),
         ('spi2', 'S. typhimurium'),
         ('hrp1', 'P. syringae'),
         ('hrp2', 'X. campestris'),
         ('chl', 'C. trachematis'),
-        ('rhi', 'S. fredii'),
         ('custom', 'Custom...')
     ])
