@@ -164,8 +164,9 @@ testing.class_is_last()
 # Try to make the directory
 try:
     os.mkdir(RES_FOLDER)
-except:
-    pass
+except OSError:
+    # Directory already exists
+    print('Directory `%s` already exists' % RES_FOLDER)
 
 # Go through all options + vote
 for cfr, op in zip(CLASSIFIERS, OPTIONS):
