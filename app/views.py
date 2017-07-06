@@ -156,7 +156,7 @@ def delete_upload(sid):
         if not app.config['TESTING']:
             rmtree(path)
     else:
-        abort(403)
+        abort(404)
 
     # Remove from firebase
     if app.config['FIREBASE']:
