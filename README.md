@@ -68,6 +68,16 @@ Put the above into `.env` in the root directory. For more variables, consult
 the accompanying `sample_env`. Remember that the file will be parsed with
 `bash`; comments start with `#`.
 
+If you are a bit low on space, note that every single heroku run would put
+temporary files in the heroku `tmp` directory. To remove them (on cloud9), you
+may do:
+
+```bash
+rm -rf ~/.local/share/heroku/tmp/*
+```
+
+If you want to automate this, put this as a cron job.
+
 ### Python
 
 To run the server with python, you will need to configure your `config.py` file.
