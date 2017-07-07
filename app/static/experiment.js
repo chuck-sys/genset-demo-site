@@ -8,11 +8,11 @@ function updateTrainingVisibility(value) {
     }
 }
 
-$(document).on('change', ':file', function() {
+$(document).on("change", ":file", function() {
     var input = $(this);
-    var label = input.val().replace(/\\/g,'/').replace(/.*\//, '');
-    input.trigger('fileselect', [label]);
-})
+    var label = input.val().replace(/\\/g,"/").replace(/.*\//, "");
+    input.trigger("fileselect", [label]);
+});
 
 $(function() {
     updateTrainingVisibility($("#trainingset").val());
@@ -21,7 +21,7 @@ $(function() {
         updateTrainingVisibility($(this).val());
     });
 
-    $(':file').on('fileselect', function(evt, label) {
-        $(this).parent().next('input[type=text]').val(label);
+    $(":file").on("fileselect", function(evt, label) {
+        $(this).parent().next("input[type=text]").val(label);
     });
 });

@@ -3,7 +3,6 @@ import subprocess as sub
 import requests
 import glob
 import json
-import time
 import sys
 import os
 

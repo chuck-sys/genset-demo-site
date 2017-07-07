@@ -29,8 +29,6 @@ re-running the others. Maybe it's possible, who knows....
 import weka.core.jvm as jvm
 from weka.core.converters import Loader
 from weka.classifiers import Classifier, Evaluation, PredictionOutput
-import numpy as np
-import sys
 import os
 import argparse as ap
 
@@ -89,9 +87,9 @@ def r_to_str(x):
     If `x` is a string, behaves as an identity function (doesn't do a thing).
     If `x` is neither a string nor a float, this function raises a `TypeError`.
     '''
-    if type(x) == float:
+    if isinstance(x, float):
         return "%0.3f" % x
-    elif type(x) == str:
+    elif isinstance(x, str):
         return x
     else:
         raise TypeError('Unsupported type')

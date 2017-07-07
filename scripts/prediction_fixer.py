@@ -17,7 +17,6 @@ the string 'TRUE' is a substring of said column. If it is, we copy the
 `1 - prediction`, and insert the result into the 'True Probability' column. The
 false probability is calculated and functions similarly.
 '''
-import sys
 import argparse as ag
 
 parser = ag.ArgumentParser(

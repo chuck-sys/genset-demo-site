@@ -17,20 +17,19 @@ function updateProgressbar(percent) {
 function updateOutput(text) {
     $("#output").append(text + "<br>");
 
-    try {
-        if (text.includes("Warning")) {
-            $(".progress-bar")
-            .addClass("progress-bar-warning")
-            .removeClass("progress-bar-success");
-        }
-        
-        if (text.includes("Error")) {
-            $(".progress-bar")
-            .addClass("progress-bar-danger")
-            .removeClass("progress-bar-success progress-bar-warning");
-        }
+    if (text.includes("Warning")) {
+        $(".progress-bar")
+        .addClass("progress-bar-warning")
+        .removeClass("progress-bar-success");
+    } else if (text.includes("Error")) {
+        $(".progress-bar")
+        .addClass("progress-bar-danger")
+        .removeClass("progress-bar-success progress-bar-warning");
+    } else {
+        $(".progress-bar")
+        .addClass("progress-bar-primary")
+        .removeClass("progress-bar-success progress-bar-warning progress-bar-danger");
     }
-    catch (e) {}
 }
 
 function deleteSession() {
