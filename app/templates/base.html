@@ -14,12 +14,12 @@
     {% block extra_headers %}{% endblock %}
 </head>
 <body>
-
-    {% include "_nav.html" %}
-    
     {% include "_flash.html" %}
+    <article>
+    {% include "_nav.html" %}
     {% block content %}{% endblock %}
-    
+    </article>
+
     <script>
     /* global $ */
     $(function() {

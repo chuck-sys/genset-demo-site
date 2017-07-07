@@ -1,43 +1,45 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="title-card">
-    <h1>GenSET</h1>
-    <small>Subtitle goes here.</small>
-    <a href="{{ url_for('experiment') }}" class="button button-default">
-        Try it out!
-    </a>
-</div>
-
-<div class="container-fluid">
-    <section>
-        <h2>About the Project</h1>
-
-        <p>
-            <img src="http://via.placeholder.com/300x300">
-
-            By using family specific prediction methods, we are able to
-            improve effector predictions with other published programs.
-            This approach can be applied to predict effectors of other
-            secretion systems as long as these effectors have translocation
-            signals embedded in their sequences.
-        </p>
-    </section>
-    
-    <section>
-        <p>
-            <img src="http://via.placeholder.com/300x300">
-        </p>
-    </section>
-    
-    <section style="text-align: center; height: 20em">
-        <h3>
-            What are you waiting for?
-        </h3>
-    
+<div>
+    <div class="title-card">
+        <h1>GenSET</h1>
+        <small>Subtitle goes here.</small>
         <a href="{{ url_for('experiment') }}" class="button button-default">
-            Try it out now!
+            Try it out!
         </a>
-    </section>
+    </div>
+
+    <div class="container-fluid">
+        <section>
+            <h2>About the Project</h1>
+
+            <p>
+                <img src="http://via.placeholder.com/300x300">
+
+                By using family specific prediction methods, we are able to
+                improve effector predictions with other published programs.
+                This approach can be applied to predict effectors of other
+                secretion systems as long as these effectors have translocation
+                signals embedded in their sequences.
+            </p>
+        </section>
+
+        <section>
+            <p>
+                <img src="http://via.placeholder.com/300x300">
+            </p>
+        </section>
+
+        <section style="text-align: center; height: 20em">
+            <h3>
+                What are you waiting for?
+            </h3>
+
+            <a href="{{ url_for('experiment') }}" class="button button-default">
+                Try it out now!
+            </a>
+        </section>
+    </div>
 </div>
 {% endblock %}
