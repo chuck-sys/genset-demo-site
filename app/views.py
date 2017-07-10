@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request, flash, abort,\
-                    Markup, send_from_directory
+                    send_from_directory
 from app import app, fbdb
 from .forms import ProcessingForm, FILE_MAP
 from . import utils
