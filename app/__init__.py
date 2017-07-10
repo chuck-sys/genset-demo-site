@@ -1,6 +1,8 @@
 from flask import Flask
 import pyrebase
 import json
+import glob
+import os.path
 
 app = Flask(__name__)
 
@@ -29,4 +31,9 @@ firebase = firebase_init()
 auth = firebase.auth()
 fbdb = firebase.database()
 
+from . import utils
 from . import views
+
+# Populate VALID_TEMPS array
+utils.VALID_TEMPS = glob.glob(os.path.join(app.config['UPLOAD_FOLDER'], '*'))
+utils.VALID_TEMPS = list(map(os.path.basename, utils.VALID_TEMPS))

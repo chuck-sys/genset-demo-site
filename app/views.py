@@ -4,6 +4,7 @@ from app import app, fbdb
 from .forms import ProcessingForm, FILE_MAP
 from . import utils
 from shutil import copyfile, rmtree
+from os.path import join
 import os
 import tempfile
 import requests
@@ -47,27 +48,26 @@ def upload():
         else:
             path = tempfile.mkdtemp(dir=app.config['UPLOAD_FOLDER'], prefix='')
             session_id = os.path.basename(path)
+            utils.VALID_TEMPS.append(session_id)
 
             # Save the files
-            request.files['testcsv'].save(os.path.join(path, app.config['TESTING_FN']))
+            request.files['testcsv'].save(join(path, app.config['TESTING_FN']))
 
             if request.files['trainingcsv'].filename != '':
-                request.files['trainingcsv'].save(os.path.join(path, app.config['TRAINING_FN']))
+                request.files['trainingcsv'].save(join(path, app.config['TRAINING_FN']))
             else:
                 try:
                     fn = FILE_MAP[request.form['trainingset']]
-                    copyfile(os.path.join(app.config['TRAINING_FOLDER'], fn),
-                             os.path.join(path, app.config['TRAINING_FN']))
+                    copyfile(join(app.config['TRAINING_FOLDER'], fn),
+                             join(path, app.config['TRAINING_FN']))
                 except KeyError:
                     flash('Error: \'%s\' is not supported' % request.form['trainingset'])
 
             # Be flashy
-            link = '<a href="%s" class="alert-link">page</a>' % url_for('view', sid=session_id)
-            success_txt = 'Success! To view progress later, bookmark the %s' % link
-            flash(Markup(success_txt))
+            flash('Success! To view progress later, bookmark this page.')
 
             # If the path exists, render the view
-            f = open(os.path.join(path, 'logs.txt'), 'w')
+            f = open(join(path, 'logs.txt'), 'w')
             env = os.environ.copy()
             env['API_KEY'] = app.config['API_KEY']
             sub.Popen(['python', 'scripts/master.py', session_id, request.form['trainingset']],
@@ -77,20 +77,17 @@ def upload():
         # Show all authentication errors
         flash('Error: %s' % ', '.join(resp['error-codes']))
 
-    return redirect(url_for('experiment',
-                            title="Try it Out!",
-                            sitekey=app.config['G_CAPTCHA_SITEKEY'],
-                            form=form,
-                            files=utils.SAMPLE_FILES))
+    return redirect(url_for('experiment'))
 
 @app.route('/view/<sid>')
 def view(sid):
-    if '/' not in sid:
-        path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
+    if utils.sid_is_valid(sid):
+        path = join(app.config['UPLOAD_FOLDER'], sid)
         if os.path.isdir(path):
             using_firebase = 'true' if app.config['FIREBASE'] else 'false'
-            return render_template('view.html',
-            sid=sid, title="Progress for %s" % sid, using_firebase=using_firebase)
+            return render_template('view.html', sid=sid,
+                                    title="Progress for %s" % sid,
+                                    using_firebase=using_firebase)
         else:
             abort(404)
     else:
@@ -98,9 +95,7 @@ def view(sid):
 
 @app.route('/api/script_update', methods=['POST'])
 def script_update():
-    if not app.config['FIREBASE']:
-        abort(400)
-    if request.json is None:
+    if not app.config['FIREBASE'] or request.json is None:
         abort(400)
     if request.json['auth_token'] != app.config['API_KEY']:
         abort(403)
@@ -120,47 +115,51 @@ def script_update():
 
 @app.route('/api/uploads/<sid>/logs')
 def get_logs(sid):
-    if '/' not in sid:
-        path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
-        if os.path.isfile(os.path.join(path, app.config['LOG_FILE'])):
+    if utils.sid_is_valid(sid):
+        path = join(app.config['UPLOAD_FOLDER'], sid)
+
+        if os.path.isfile(join(path, app.config['LOG_FILE'])):
             return send_from_directory(directory=path,
                                         filename=app.config['LOG_FILE'])
         else:
             abort(404)
     else:
-        abort(403)
+        abort(404)
 
 @app.route('/api/uploads/<sid>/download')
 def download(sid):
-    if not utils.sid_is_valid(sid):
-        abort(400)
+    if utils.sid_is_valid(sid):
+        path = join(app.config['UPLOAD_FOLDER'], sid)
 
-    path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
-
-    if os.path.isfile(os.path.join(path, app.config['RESULTS_ZIP'])):
-        return send_from_directory(directory=path,
-                                    filename=app.config['RESULTS_ZIP'])
+        if os.path.isfile(join(path, app.config['RESULTS_ZIP'])):
+            return send_from_directory(directory=path,
+                                        filename=app.config['RESULTS_ZIP'])
+        else:
+            abort(404)
     else:
-        abort(404)
+        abort(404);
 
 @app.route('/api/uploads/<sid>', methods=['DELETE'])
 def delete_upload(sid):
-    if not utils.sid_is_valid(sid):
-        abort(400)
+    if utils.sid_is_valid(sid):
+        # Remove the entire upload
+        path = join(app.config['UPLOAD_FOLDER'], sid)
 
-    # Remove the entire upload
-    path = os.path.join(app.config['UPLOAD_FOLDER'], sid)
+        # If it exists, of course
+        if os.path.isdir(path):
+            if not app.config['TESTING']:
+                rmtree(path)
+        else:
+            abort(404)
 
-    # If it exists, of course
-    if os.path.isdir(path):
-        if not app.config['TESTING']:
-            rmtree(path)
+        # Remove from firebase
+        if app.config['FIREBASE']:
+            fbdb.child('sessions').child(sid).remove()
+
+        # Remove from temporary file list
+        utils.VALID_TEMPS.remove(sid)
+
+        flash('Success! Deleted run data for "%s"' % sid)
+        return '', 200
     else:
         abort(404)
-
-    # Remove from firebase
-    if app.config['FIREBASE']:
-        fbdb.child('sessions').child(sid).remove()
-
-    flash('Success! Deleted run data for "%s"' % sid)
-    return '', 200
