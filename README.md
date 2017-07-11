@@ -96,3 +96,12 @@ ${EDITOR} config.py
 
 Of course, you are fully able to run the site without custom configuration, but
 you are unable to run the database part of the website, namely `firebase`.
+
+#### Environment
+
+In order to get the same functionality as with the heroku method (shown above),
+you must source your environment file as such.
+
+```sh
+. .env
+```
