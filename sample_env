@@ -1,13 +1,22 @@
+# Google reCAPTCHA
 G_CAPTCHA_SITEKEY=''
 G_CAPTCHA_SECRET=''
 
+# API key for website (any random 15+ string should do)
 API_KEY=''
+# Where the user uploads go
 UPLOAD_FOLDER=''
+# Where the script folder is
 SCRIPTS_FOLDER=''
 
+# Firebase authentication file
+# Should be some sort of key file
 FIREBASE_AUTH_FILE=''
 
+# Name of the testing CSV file uploaded
 TESTING_FN=''
+# Name of the training CSV file uploaded
 TRAINING_FN=''
 
+# The base URL of the site (e.g.: `localhost:3000`)
 BASE_URL=''
