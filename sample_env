@@ -8,6 +8,8 @@ API_KEY=''
 UPLOAD_FOLDER=''
 # Where the script folder is
 SCRIPTS_FOLDER=''
+# Where the folder with all the training data is
+TRAINING_FOLDER=''
 
 # Firebase authentication file
 # Should be some sort of key file
