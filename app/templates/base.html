@@ -19,12 +19,5 @@
     {% include "_nav.html" %}
     {% block content %}{% endblock %}
     </article>
-
-    <script>
-    /* global $ */
-    $(function() {
-        $("#{{ request.endpoint }}").addClass('active');
-    });
-    </script>
 </body>
 </html>
