@@ -8,13 +8,6 @@ form .item {
     margin: 0 1rem;
 }
 
-article {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    margin: 2rem auto;
-}
-
 .container-fluid {
     width: 65rem;
     padding: 1rem;
@@ -59,10 +52,6 @@ article {
     text-align: center;
 }
 
-nav {
-    width: 8rem;
-}
-
 ul.navigation {
     list-style-type: none;
     margin: 0;
@@ -101,31 +90,8 @@ ul.navigation li a:hover {
     border: none;
 }
 
-input:placeholder-shown {
-    color: #dfdfdf;
-}
-
 .input-group label {
     background: #cfcfcf;
-}
-
-section:nth-of-type(1) {
-    padding-top: 0;
-}
-
-section img {
-    float: right;
-    margin-left: 2rem;
-}
-
-section p {
-    text-align: justify;
-}
-
-section:nth-of-type(even) img {
-    float: left;
-    margin-left: 0;
-    margin-right: 2rem;
 }
 
 .modal-dialog {
