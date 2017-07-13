@@ -33,8 +33,7 @@ def upload():
         'response': request.form['g-recaptcha-response'],
         'remoteip': request.remote_addr
     }
-    resp = requests.post(app.config['G_CAPTCHA_VERIFY'],
-                        data=data).json()
+    resp = requests.post(app.config['G_CAPTCHA_VERIFY'], data=data).json()
 
     # Check to see if user is a bot
     if resp['success']:
