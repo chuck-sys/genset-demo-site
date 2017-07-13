@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, flash, abort,\
                     send_from_directory
 from app import app, fbdb
-from .forms import ProcessingForm, FILE_MAP
+from .forms import ProcessingForm
 from . import utils
 from shutil import copyfile, rmtree
 from os.path import join
@@ -57,7 +57,7 @@ def upload():
             else:
                 # A custom training file does not exist
                 try:
-                    fn = FILE_MAP[request.form['trainingset']]
+                    fn = utils.FILE_MAP[request.form['trainingset']]
                     copyfile(join(app.config['TRAINING_FOLDER'], fn),
                              join(path, app.config['TRAINING_FN']))
                 except KeyError:

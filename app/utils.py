@@ -1,3 +1,15 @@
+'''
+The utilities module
+
+This module is a collection of useful functions and tidbits that come in handy
+for some things. It contain functions that may be too big to be inlined, but
+too small to deserve a module of their own. It also contains global variables
+and global constants that are used in other parts of the website.
+
+The goal of this module is simple: to abstract out as much code as possible from
+the main files, so that one could focus more on the logic, and less of the code.
+'''
+
 from tempfile import mkdtemp
 from os.path import basename
 
@@ -14,6 +26,15 @@ SAMPLE_FILES = [
 ]
 
 VALID_TEMPS = []
+
+FILE_MAP = {
+    'ecoli': 'E_Coli_Training.csv',
+    'spi1': 'S_Dysenterae_Training.csv',
+    'spi2': 'S_Typhimurium_Training.csv',
+    'hrp1': 'P_Syringae_Training.csv',
+    'hrp2': 'X_Campestris_Training.csv',
+    'chl': 'C_Trachomatis_Training.csv',
+}
 
 # Functions
 def sid_is_valid(sid):

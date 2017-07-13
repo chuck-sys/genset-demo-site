@@ -5,15 +5,6 @@ from wtforms import SelectField
 from wtforms.validators import DataRequired
 from app import app
 
-FILE_MAP = {
-    'ecoli': 'E_Coli_Training.csv',
-    'spi1': 'S_Dysenterae_Training.csv',
-    'spi2': 'S_Typhimurium_Training.csv',
-    'hrp1': 'P_Syringae_Training.csv',
-    'hrp2': 'X_Campestris_Training.csv',
-    'chl': 'C_Trachomatis_Training.csv',
-}
-
 csvs = UploadSet('csvs', ('csv',))
 configure_uploads(app, (csvs,))
 
