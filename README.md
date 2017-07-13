@@ -38,6 +38,6 @@ python run.py
 [travis]: https://travis-ci.org/cheukyin699/genset-demo-site
 [codacybadge]: https://img.shields.io/codacy/grade/feac75edbe5241eaa206de597efb38ef.svg
 [codacy]: https://www.codacy.com/app/chucksys88/genset-demo-site?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cheukyin699/genset-demo-site&amp;utm_campaign=Badge_Grade
-[websitebadge]: https://img.shields.io/website-up-down-green-red/https/genset-testing-cheukyin699.c9users.io
+[websitebadge]: https://img.shields.io/website-up-down-green-red/https/genset-testing-cheukyin699.c9users.io.svg
 [website]: https://genset-testing-cheukyin699.c9users.io
 [pythonbadge]: https://img.shields.io/badge/python-3.5%203.6-blue.svg
