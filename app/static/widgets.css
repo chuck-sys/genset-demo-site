@@ -48,7 +48,6 @@
 .button:hover {
     text-decoration: none;
     color: #ccc;
-
     transform: translate(2px, 2px);
 }
 
@@ -71,7 +70,6 @@
 
 .button:active {
     box-shadow: 1px 1px #597730;
-
     transform: translate(4px, 4px);
 }
 
@@ -81,4 +79,6 @@
     background: #78aaa5;
     color: #ddd;
     height: 100%;
+
+    transition: width 0.5s ease;
 }
