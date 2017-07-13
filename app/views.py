@@ -45,9 +45,8 @@ def upload():
                 for e in errors:
                     flash('Error in %s: %s' % (getattr(form, field).label.text, e))
         else:
-            path = tempfile.mkdtemp(dir=app.config['UPLOAD_FOLDER'], prefix='')
-            session_id = os.path.basename(path)
-            utils.VALID_TEMPS.append(session_id)
+            # Valid submissions create folders
+            path, session_id = utils.create_temp_folder(app.config['UPLOAD_FOLDER'])
 
             # Save the files
             request.files['testcsv'].save(join(path, app.config['TESTING_FN']))
@@ -62,7 +61,9 @@ def upload():
                     copyfile(join(app.config['TRAINING_FOLDER'], fn),
                              join(path, app.config['TRAINING_FN']))
                 except KeyError:
+                    # If it isn't on the file map, error out
                     flash('Error: \'%s\' is not supported' % request.form['trainingset'])
+                    return redirect(url_for('experiment'))
 
             # Be flashy
             flash('Success! To view progress later, bookmark this page.')
@@ -70,10 +71,9 @@ def upload():
             # Open the log file
             f = open(join(path, 'logs.txt'), 'w')
             env = os.environ.copy()
-            env['API_KEY'] = app.config['API_KEY']
-            sub.Popen(['python', 'scripts/master.py', session_id, request.form['trainingset']],
-                        stdout=f, stderr=f, env=env)
-            # If the path exists, render the view
+            # Run the script
+            sub.Popen(['python', 'scripts/master.py', session_id, request.form['trainingset']], stdout=f, stderr=f, env=env)
+
             return redirect(url_for('view', sid=session_id))
     else:
         # Show all authentication errors
@@ -123,7 +123,7 @@ def _send_file(sid, folder, fn):
     '''
     if utils.sid_is_valid(sid):
         path = join(folder, sid)
-        
+
         if os.path.isfile(join(path, fn)):
             return send_from_directory(directory=path,
                                        filename=fn)

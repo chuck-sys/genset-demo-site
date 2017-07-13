@@ -1,3 +1,6 @@
+from tempfile import mkdtemp
+from os.path import basename
+
 # Variables
 SAMPLE_FILES = [
     ('E. coli', 'https://raw.githubusercontent.com/cheukyin699/genset-training-csvs/master/E_Coli_Training.csv'),
@@ -20,3 +23,15 @@ def sid_is_valid(sid):
     traversal.
     '''
     return not '/' in sid and not '\\' in sid and not '.' in sid and sid in VALID_TEMPS
+
+def create_temp_folder(d):
+    '''
+    Creates a temporary folder in directory `d`. Returns the path and name of
+    the temporary folder (commonly known as session ID) in tuple form. Appends
+    the session ID to the list of valid sessions `VALID_TEMPS`.
+    '''
+    path = mkdtemp(dir=d, prefix='')
+    session_id = basename(path)
+    VALID_TEMPS.append(session_id)
+
+    return path, session_id
