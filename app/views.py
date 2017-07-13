@@ -6,7 +6,6 @@ from . import utils
 from shutil import copyfile, rmtree
 from os.path import join
 import os
-import tempfile
 import requests
 import subprocess as sub
 
