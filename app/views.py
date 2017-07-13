@@ -53,8 +53,10 @@ def upload():
             request.files['testcsv'].save(join(path, app.config['TESTING_FN']))
 
             if request.files['trainingcsv'].filename != '':
+                # A custom training file exists
                 request.files['trainingcsv'].save(join(path, app.config['TRAINING_FN']))
             else:
+                # A custom training file does not exist
                 try:
                     fn = FILE_MAP[request.form['trainingset']]
                     copyfile(join(app.config['TRAINING_FOLDER'], fn),
@@ -65,12 +67,13 @@ def upload():
             # Be flashy
             flash('Success! To view progress later, bookmark this page.')
 
-            # If the path exists, render the view
+            # Open the log file
             f = open(join(path, 'logs.txt'), 'w')
             env = os.environ.copy()
             env['API_KEY'] = app.config['API_KEY']
             sub.Popen(['python', 'scripts/master.py', session_id, request.form['trainingset']],
                         stdout=f, stderr=f, env=env)
+            # If the path exists, render the view
             return redirect(url_for('view', sid=session_id))
     else:
         # Show all authentication errors
@@ -112,31 +115,30 @@ def script_update():
     fbdb.child('sessions').child(sid).set(data)
     return '', 200
 
-@app.route('/api/uploads/<sid>/logs')
-def get_logs(sid):
+def _send_file(sid, folder, fn):
+    '''
+    Sends the file `fn` from directory `folder`. Aborts with 404 if either the
+    sid, directory, or file does not exist. Used as a helper function for the
+    API getters.
+    '''
     if utils.sid_is_valid(sid):
-        path = join(app.config['UPLOAD_FOLDER'], sid)
-
-        if os.path.isfile(join(path, app.config['LOG_FILE'])):
+        path = join(folder, sid)
+        
+        if os.path.isfile(join(path, fn)):
             return send_from_directory(directory=path,
-                                        filename=app.config['LOG_FILE'])
+                                       filename=fn)
         else:
             abort(404)
     else:
         abort(404)
 
+@app.route('/api/uploads/<sid>/logs')
+def get_logs(sid):
+    return _send_file(sid, app.config['UPLOAD_FOLDER'], app.config['LOG_FILE'])
+
 @app.route('/api/uploads/<sid>/download')
 def download(sid):
-    if utils.sid_is_valid(sid):
-        path = join(app.config['UPLOAD_FOLDER'], sid)
-
-        if os.path.isfile(join(path, app.config['RESULTS_ZIP'])):
-            return send_from_directory(directory=path,
-                                        filename=app.config['RESULTS_ZIP'])
-        else:
-            abort(404)
-    else:
-        abort(404);
+    return _send_file(sid, app.config['UPLOAD_FOLDER'], app.config['RESULTS_ZIP'])
 
 @app.route('/api/uploads/<sid>', methods=['DELETE'])
 def delete_upload(sid):
