@@ -1,10 +1,9 @@
-from flask import render_template, redirect, url_for, request, flash, abort,\
-                    send_from_directory
+from flask import render_template, redirect, url_for, request, flash, abort, send_from_directory
 from app import app, fbdb
 from .forms import ProcessingForm
 from . import utils
 from shutil import copyfile, rmtree
-from os.path import join
+from os.path import join, isfile, isdir
 import os
 import requests
 import subprocess as sub
@@ -13,7 +12,7 @@ import subprocess as sub
 @app.route('/about')
 def index():
     return render_template('index.html',
-                            title="GenSET")
+                           title="GenSET")
 
 @app.route('/experiment', methods=['GET'])
 def experiment():
@@ -84,7 +83,7 @@ def upload():
 def view(sid):
     if utils.sid_is_valid(sid):
         path = join(app.config['UPLOAD_FOLDER'], sid)
-        if os.path.isdir(path):
+        if isdir(path):
             using_firebase = 'true' if app.config['FIREBASE'] else 'false'
             return render_template('view.html', sid=sid,
                                     title="Progress for %s" % sid,
@@ -123,7 +122,7 @@ def _send_file(sid, folder, fn):
     if utils.sid_is_valid(sid):
         path = join(folder, sid)
 
-        if os.path.isfile(join(path, fn)):
+        if isfile(join(path, fn)):
             return send_from_directory(directory=path,
                                        filename=fn)
         else:
@@ -146,7 +145,7 @@ def delete_upload(sid):
         path = join(app.config['UPLOAD_FOLDER'], sid)
 
         # If it exists, of course
-        if os.path.isdir(path):
+        if isdir(path):
             if not app.config['TESTING']:
                 rmtree(path)
         else:

@@ -9,7 +9,6 @@ and global constants that are used in other parts of the website.
 The goal of this module is simple: to abstract out as much code as possible from
 the main files, so that one could focus more on the logic, and less of the code.
 '''
-
 from tempfile import mkdtemp
 from os.path import basename
 

@@ -2,7 +2,7 @@
 {% if msgs %}
 {% for msg in msgs %}
 {% if 'err' in msg.lower() %}
-<div class='alert alert-danger' role=alert>{{ msg }}</div>
+<div class="alert alert-danger" role=alert>{{ msg }}</div>
 {% elif 'success' in msg.lower() %}
 <div class="alert alert-success" role=alert>{{ msg }}</div>
 {% else %}
