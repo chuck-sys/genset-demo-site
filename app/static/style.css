@@ -94,14 +94,6 @@ ul.navigation li a:hover {
     background: #cfcfcf;
 }
 
-.modal-dialog {
-    color: #777;
-}
-
-.modal-dialog h3 {
-    color: #666;
-}
-
 @media (max-width: 80rem),
 handheld {
     .container-fluid {
