@@ -14,10 +14,6 @@ function updateProgressbar(percent) {
     .text(percent + "%");
 }
 
-function updateOutput(text) {
-    $("#output").append(text + "<br>");
-}
-
 function deleteSession() {
     $.ajax({
         url: "/api/uploads/" + sessionID,
@@ -34,7 +30,7 @@ $(function() {
         var textRef = firebase.database().ref("sessions/" + sessionID + "/text");
         textRef.on("value", function(snapshot) {
             // Add text to output
-            updateOutput(snapshot.val());
+            $("#output").append(snapshot.val() + "<br>");
         });
         progressRef.on("value", function(snapshot) {
             // Update progress bar
