@@ -5,11 +5,7 @@
 // Variables from python
 var sessionID = "{{ sid }}";
 // Are we using firebase?
-{% if using_firebase %}
-var usingFirebase = true;
-{% else %}
-var usingFirebase = false;
-{% endif %}
+var usingFirebase = {{ 'true' if using_firebase else 'false' }};
 </script>
 <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='view.js') }}"></script>
