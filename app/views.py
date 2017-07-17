@@ -12,7 +12,7 @@ import subprocess as sub
 @app.route('/about')
 def index():
     return render_template('index.html',
-                           title="GenSET")
+                           title="The GenSET Project")
 
 @app.route('/experiment', methods=['GET'])
 def experiment():
