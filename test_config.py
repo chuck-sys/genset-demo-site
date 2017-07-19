@@ -28,3 +28,4 @@ API_KEY = os.environ.get('API_KEY', '')
 RESULTS_ZIP = "results.zip"
 TESTING_FN = os.environ['TESTING_FN']
 TRAINING_FN = os.environ['TRAINING_FN']
+MAX_CONTENT_LENGTH = 1 * 1024 ** 2

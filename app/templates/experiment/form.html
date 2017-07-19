@@ -1,4 +1,4 @@
-<h2>Upload</h2>
+<h2>Upload <small>Maximum: 1mb/csv file</small></h2>
 
 <form id="form" action="/upload" method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
@@ -32,7 +32,7 @@
 </form>
 
 <script type="text/javascript">
-    function onSubmitForm(token) {
-        document.getElementById("form").submit();
-    }
+function onSubmitForm(token) {
+    document.getElementById("form").submit();
+}
 </script>
