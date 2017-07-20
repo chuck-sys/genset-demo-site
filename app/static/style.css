@@ -60,6 +60,7 @@ ul.navigation {
 
 ul.navigation img {
     width: 8rem;
+    height: auto;
     padding: 1rem;
 }
 
@@ -107,10 +108,6 @@ handheld {
 
     article {
         flex-flow: column nowrap;
-    }
-
-    nav {
-        width: 100%;
     }
 
     ul.navigation {
