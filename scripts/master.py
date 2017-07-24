@@ -96,7 +96,7 @@ update_progress(60, make_header('parsing weka results'))
 predict_script = os.path.join(SCRIPTS_FOLDER, 'prediction_fixer.py')
 g = glob.glob(os.path.join(SESSION_FOLDER, RESULTS_DIR, '*.out.csv'))
 starting = 80
-interval = len(g) / 10.0
+interval = 10.0 / len(g)
 for f in g:
     # Iterate over every single predictions file
     fn = training.replace('.arff', '.csv')
