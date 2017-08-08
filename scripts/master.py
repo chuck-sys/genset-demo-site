@@ -25,6 +25,9 @@ def make_header(s):
     return "=" * 10 + s.upper() + "=" * 10
 
 def update_script(progress, text):
+    '''
+    Sends a post request to the server to update a particular WEKA run.
+    '''
     data = {}
     # Populate the data
     data['session_id'] = SID
@@ -36,13 +39,24 @@ def update_script(progress, text):
     requests.post(API_PATH, data=json.dumps(data), headers=HEADER)
 
 def update_progress(progress, text):
-    print(text)
+    '''
+    Sends a post request to the server and prints said request to stdout, if
+    there is a textual request.
+    '''
+    if text != '':
+        print(text)
     update_script(progress, text)
 
 def update_progress_wrapper(progress, p):
+    '''
+    A wrapper to wrap around the `update_progress` function.
+    '''
     update_progress(progress, str(p.stderr + b'\n' + p.stdout, 'utf-8'))
 
 def process_return_code(p):
+    '''
+    A function to check the response code for the subprocess.
+    '''
     if p.returncode != 0:
         update_progress(100, "Aborting...")
         sys.exit(0)
