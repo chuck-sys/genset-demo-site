@@ -22,6 +22,11 @@ TESTING_FN = os.environ['TESTING_FN']
 TRAINING_FN = os.environ['TRAINING_FN']
 
 def make_header(s):
+    '''
+    Creates a nice heading for logs. Returns said nice heading.
+    
+    Example: "==========START=========="
+    '''
     return "=" * 10 + s.upper() + "=" * 10
 
 def update_script(progress, text):
