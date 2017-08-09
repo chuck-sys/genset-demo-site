@@ -9,6 +9,9 @@ csvs = UploadSet('csvs', ('csv',))
 configure_uploads(app, (csvs,))
 
 class ProcessingForm(FlaskForm):
+    '''
+    The form for processing file uploads.
+    '''
     testcsv = FileField('test csv', validators=[
         FileRequired(),
         FileAllowed(csvs, 'CSVs only!')

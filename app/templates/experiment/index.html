@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
 {% block extra_headers %}
-<script type="text/javascript"
-src="{{ url_for('static', filename='experiment.js') }}"></script>
+
+{% assets "experiment.js" %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
 <script src='https://www.google.com/recaptcha/api.js'></script>
 {% endblock %}
 

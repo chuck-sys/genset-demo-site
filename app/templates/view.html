@@ -8,7 +8,10 @@ var sessionID = "{{ sid }}";
 var usingFirebase = {{ 'true' if using_firebase else 'false' }};
 </script>
 <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='view.js') }}"></script>
+
+{% assets "view.js" %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
 {% endblock %}
 
 {% block content %}
