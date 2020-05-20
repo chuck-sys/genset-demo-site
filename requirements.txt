@@ -11,7 +11,7 @@ Flask-WTF==0.14.2
 gcloud==0.17.0
 google-auth==1.0.1
 googleapis-common-protos==1.5.2
-httplib2==0.10.3
+httplib2==0.18.0
 idna==2.5
 itsdangerous==0.24
 javabridge==1.0.14
