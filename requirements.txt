@@ -24,7 +24,7 @@ numpy==1.13.0
 oauth2client==3.0.0
 packaging==16.8
 protobuf==3.3.0
-py==1.4.33
+py==1.10.0
 pyasn1==0.2.3
 pyasn1-modules==0.0.8
 pycryptodome==3.4.3
